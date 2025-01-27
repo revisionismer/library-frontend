@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
+
+  const { pathname } = useLocation();
+
+  if (pathname === '/signin') {
+    return (
+      <div id='app'>
+        <Routes>
+          <Route path='/signin/*' exact={true} element={<Home />}></Route>
+        </Routes>
+      </div>
+    );
+  }
+
+  if (pathname === '/signup') {
+    return (
+      <div id='app'>
+        <Routes>
+          <Route path='/signup/*' exact={true} element={<Home />}></Route>
+        </Routes>
+      </div>
+
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='wrap'>
+      <Header />
+      <Routes>
+        <Route path='/*' exact={true} element={<Home />}></Route>
+      </Routes>
+      <Footer />
     </div>
   );
 }
