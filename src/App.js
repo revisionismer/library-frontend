@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AddBook from "./pages/book/AddBook";
 import Cart from "./pages/cart/Cart";
+import OrderList from "./pages/order/OrderList";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
         <Route path='/*' exact={true} element={<Home />}></Route>
         <Route path='/BookMarket/books/add' exact={true} element={<AddBook />}></Route>
         <Route path='/BookMarket/cart' exact={true} element={<Cart />}></Route>
+        <Route path='/BookMarket/order/list' exact={true} element={<OrderList />}></Route>
       </Routes>
       <Footer />
     </div>

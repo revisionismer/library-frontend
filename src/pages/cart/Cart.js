@@ -15,13 +15,15 @@ const Cart = () => {
                 </div>
                 <div id='cart'>
                     <div id='cart_area'>
-                        <div className="row align-items-md-stretch">
-                            <div className="col-md-12">
-                                <form name="clearForm" method="post">
-                                    <input type="hidden" name="_method" value="delete" />
-                                    <Link className="btn btn-danger" style={{ float: 'left' }}>삭제하기</Link>
-                                    <button to='/BookMarket/order/1' className="btn btn-success text-right" style={{ float: 'right' }}>주문하기</button>
-                                </form>
+                        <div id='cart_area_btn'>
+                            <div className="row align-items-md-stretch">
+                                <div className="col-md-12">
+                                    <form name="clearForm" method="post">
+                                        <input type="hidden" name="_method" value="delete" />
+                                        <Link className="btn btn-danger" style={{ float: 'left' }}>삭제하기</Link>
+                                        <button to='/BookMarket/order/1' className="btn btn-success text-right" style={{ float: 'right' }}>주문하기</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
@@ -37,7 +39,7 @@ const Cart = () => {
                                             <th>수량</th>
                                             <th>소계</th>
                                             <th>비고</th>
-                                            <th>/</th>
+                                            <th>-</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -49,10 +51,10 @@ const Cart = () => {
                                             <td>12000원</td>
                                             <td>3</td>
                                             <td>3</td>
-                                            <td></td>
+                                            <td>신청 중</td>
                                             <td>
                                                 <Link>
-                                                    <span className="badge text-bg-danger"></span>
+                                                    <span className="badge text-bg-danger">재고 부족</span>
                                                 </Link>
                                             </td>
                                         </tr>

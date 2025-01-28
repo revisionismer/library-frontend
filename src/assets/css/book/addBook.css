@@ -19,3 +19,7 @@
 #text-end a {
     margin: 0 5px;
 }
+
+#addbook #bookWriteForm {
+    margin: 10px 0px;
+}
