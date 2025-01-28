@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#addbook {
+    width: 100%;
+}
+
+#addbook_area {
+    border : 1px solid #ddd;
+    padding: 10px 20px; 
+}
+
+#book_status {
+    display: flex;
+    width: 15vw;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#text-end a {
+    margin: 0 5px;
+}

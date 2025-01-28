@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+#cart {
+    height: 70vh;
+}
+
+#cart_area {
+    border : 1px solid #ddd;
+    padding: 10px 20px; 
+}

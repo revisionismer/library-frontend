@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { Dropdown } from 'react-bootstrap';
 
+import '../assets/css/layout/header.css';
+
 const Header = () => {
     return (
         <>
@@ -34,7 +36,7 @@ const Header = () => {
                     <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp; </Link>
                     <Link to="/BookMarket/members/add" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
                     <Link to="/BookMarket/login" className="nav-link">로그인 &nbsp;| &nbsp;</Link>
-                    <Link to="'/BookMarket/members/update/1" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
+                    <Link to="/BookMarket/members/update/1" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
                     <Link to="/BookMarket/logout" className="nav-link">로그아웃 &nbsp;| &nbsp;</Link>
                     <b><span>회원</span>님</b>
                 </div>
