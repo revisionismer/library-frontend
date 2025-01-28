@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+#orderList {
+    height: 100vh;
+}
+
+#orderList_area {
+    border : 1px solid #ddd;
+    padding: 10px 20px; 
+  
+    display: flex;
+}
+
+#orderList_area > div > div > table > tbody > tr > td#orderListBtn a {
+    padding-right: 5px;
+}
+
+#orderList_area_btn {
+    border-bottom : 1px solid #ddd;
+    width: 83vw;
+    padding-bottom: 10px;
+    
+    display: flex;
+    justify-content: space-between;
+    
+}
