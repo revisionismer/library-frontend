@@ -8,3 +8,8 @@
     border : 1px solid #ddd;
     padding: 10px 20px; 
 }
+
+#cart_area_btn {
+    border-bottom : 1px solid #ddd;
+    padding-bottom: 10px;
+}
