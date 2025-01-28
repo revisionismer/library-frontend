@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import '../src/assets/css/layout/reset.css';
+import '../src/assets/css/reset.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
 
