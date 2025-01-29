@@ -34,8 +34,8 @@ const Header = () => {
                     <Link to="/BookMarket/cart" className="nav-link">장바구니 &nbsp;| &nbsp;  </Link>
                     <Link to="/BookMarket/order/list" className="nav-link">주문목록 &nbsp;| &nbsp;   </Link>
                     <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp; </Link>
-                    <Link to="/BookMarket/members/add" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
-                    <Link to="/BookMarket/login" className="nav-link">로그인 &nbsp;| &nbsp;</Link>
+                    <Link to="/BookMarket/signup" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
+                    <Link to="/BookMarket/signin" className="nav-link">로그인 &nbsp;| &nbsp;</Link>
                     <Link to="/BookMarket/members/update/1" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
                     <Link to="/BookMarket/logout" className="nav-link">로그아웃 &nbsp;| &nbsp;</Link>
                     <b><span>회원</span>님</b>
