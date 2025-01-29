@@ -4,6 +4,14 @@
     height: 100vh;
 }
 
+#orderList a {
+    text-decoration: none;
+}
+
+#orderList a:hover {
+    color: #ddd;
+}
+
 #orderList_area {
     border : 1px solid #ddd;
     padding: 10px 20px; 

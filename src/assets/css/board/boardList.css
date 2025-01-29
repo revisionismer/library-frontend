@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#boardList {
+    height: 100vh;
+}
+
+#boardList a {
+    text-decoration: none;
+}
+
+#boardList a:hover {
+    color: #ddd;
+}
+
+#boardList_area {
+    border : 1px solid #ddd;
+    padding: 10px 20px; 
+  
+    display: flex;
+    
+    
+}
+
+#boardList_area table {
+    width: 80vw;
+}
+
+#boardList_area table tbody td {
+    border-bottom: 1px solid #ddd;
+}
+
+#boardList_area #paging > div > span {
+  
+}
+
+#boardWriteBtnArea {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
