@@ -5,6 +5,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import AddBook from "./pages/book/AddBook";
 import Cart from "./pages/cart/Cart";
 import OrderList from "./pages/order/OrderList";
+import BoardList from "./pages/board/BoardList";
 
 function App() {
 
@@ -39,6 +40,9 @@ function App() {
         <Route path='/BookMarket/books/add' exact={true} element={<AddBook />}></Route>
         <Route path='/BookMarket/cart' exact={true} element={<Cart />}></Route>
         <Route path='/BookMarket/order/list' exact={true} element={<OrderList />}></Route>
+
+        <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
+
       </Routes>
       <Footer />
     </div>
