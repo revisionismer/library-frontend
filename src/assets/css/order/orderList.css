@@ -15,8 +15,7 @@
 #orderList_area {
     border : 1px solid #ddd;
     padding: 10px 20px; 
-  
-    display: flex;
+
 }
 
 #orderList_area > div > div > table > tbody > tr > td#orderListBtn a {
