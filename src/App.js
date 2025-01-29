@@ -6,6 +6,9 @@ import AddBook from "./pages/book/AddBook";
 import Cart from "./pages/cart/Cart";
 import OrderList from "./pages/order/OrderList";
 import BoardList from "./pages/board/BoardList";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+
 
 function App() {
 
@@ -15,7 +18,7 @@ function App() {
     return (
       <div id='app'>
         <Routes>
-          <Route path='/signin/*' exact={true} element={<Home />}></Route>
+          <Route path='/signin/*' exact={true} element={<SignIn />}></Route>
         </Routes>
       </div>
     );
@@ -25,7 +28,7 @@ function App() {
     return (
       <div id='app'>
         <Routes>
-          <Route path='/signup/*' exact={true} element={<Home />}></Route>
+          <Route path='/signup/*' exact={true} element={<SignUp />}></Route>
         </Routes>
       </div>
 
