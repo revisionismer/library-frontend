@@ -1,0 +1,309 @@
+@charset "UTF-8";
+html {
+	height: 100vh;
+	min-height: 660px;
+	min-width: 320px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+textarea,
+input {
+	outline: none;
+	appearance: none;
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+
+span {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-o-user-select: none;
+}
+
+.wrapper {
+    justify-content: center;
+    width: 100%;
+    min-width: 320px;
+    max-width: 450px;
+    margin: 0 auto;
+    position: relative;
+    padding: 50px 15px;
+    box-sizing: border-box;
+}
+
+.title-logo {
+    display: block;
+    width: 165px;
+    height: 37px;
+    margin: 0 auto;
+}
+
+.title-description {
+    display: block;
+    margin: 32px 0 0;
+    font-family: "Apple SD Gothic Neo";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #7e8082;
+}
+
+#login-form {
+    display: block;
+    margin-top: 56px;
+}
+
+.login-input-container {
+    display: block;
+    background: #ffffff;
+    border: 1px solid #d5d7d9;
+    border-radius: 4px;
+    height: 48px;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    transition: 0.2s;
+}
+
+.login-input-container:focus-within {
+	border: 2px solid #181a1c;
+}
+
+.login-input-container > input {
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #181a1c;
+    padding: 13.5px 40px 13.5px 11px;
+    border: none;
+    background: #ffffff;
+    font-size: 14px;
+    caret-color: #2ac1bc;
+}
+
+.login-input-container > input::placeholder {
+	color: #b1b3b5;
+}
+
+.login-input-container > span {
+    font-family: "Apple SD Gothic Neo";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #b1b3b5;
+    position: absolute;
+    background: #ffffff;
+    top: 15px;
+    left: 6px;
+    padding: 0 5px;
+    display: block;
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.login-input-container.isTyping > span,
+.login-input-container:focus-within > span {
+    font-size: 10px;
+    color: #7e8082;
+}
+      
+.login-input-container.isTyping:focus-within > span,
+.login-input-container:focus-within > span {
+    top: -7px;
+    left: 6px;
+}
+
+.login-input-container.isTyping > span {
+    top: -6px;
+    left: 7px;
+    transition: none;
+}
+
+.login-input-container:focus-within > input {
+	  padding: 12.5px 40px 12.5px 10px;
+}
+
+.login-input-container > .icon-cancel {
+    display: none;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    background-image: url("../img/icon-cancel.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.login-input-container.isTyping:focus-within > .icon-cancel {
+	  display: block;
+}
+
+.login-button {
+    display: block;
+	  border: none;
+	  width: 100%;
+	  margin-top: 32px;
+	  height: 50px;
+	  background: #2ac1bc;
+	  border-radius: 4px;
+	  color: #fff;
+	  font-family: "Apple SD Gothic Neo";
+	  font-style: normal;
+	  font-weight: 700;
+	  font-size: 18px;
+	  cursor: pointer;
+}
+
+.login-button:disabled {
+	  background: #d5d7d9;
+}
+
+.cancel-button {
+  display: block;
+	  border: none;
+	  width: 100%;
+	  margin-top: 12px;
+	  height: 50px;
+	  background: #f01c09;
+	  border-radius: 4px;
+	  color: #fff;
+	  font-family: "Apple SD Gothic Neo";
+	  font-style: normal;
+	  font-weight: 700;
+	  font-size: 18px;
+	  cursor: pointer;
+}
+
+.sns-login-container {
+	  margin-top: 40px;
+}
+
+.signup-login-container {
+	  margin-top: 32px;
+}
+
+.btn-signup-login {
+	  width: 100%;
+	  height: 50px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  background-color: white;
+	  border: 1px solid #D5D7D9;
+	  border-radius: 25px;
+	  margin: 0;
+	  padding: 0;
+	  cursor: pointer;
+}
+
+.btn-phone-login > i {
+	  display: block;
+	  width: 20px;
+	  height: 20px;
+	  background-position: center;
+	  background-size: 20px 20px;
+	  background-image: url("../img/call@2x.png");
+	  margin-right: 4px;
+}
+
+.sns-login-title {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+}
+
+.sns-login-title > span {
+	  font-size: 14px;
+	  font-weight: 400;
+	  line-height: 150%;
+	  color: #7E8082;
+	  margin: 0 15px;
+}
+
+.sns-login-title::after, .sns-login-title::before {
+	  display: block;
+	  content: "";
+	  height: 1px;
+	  background-color: #E4E6E8;
+	  flex-grow: 1;
+}
+
+.sns-login-list {
+	  display: flex;
+	  margin: 28px 0 0;
+	  padding: 0;
+	  width: 100%;
+	  list-style: none;
+	  text-align: center;
+	  justify-content: center;
+}
+
+.sns-login-list > li {
+	  margin-right: 24px;
+}
+
+.sns-login-list > li:last-child {
+	  margin-right: 0;
+}
+
+.btn-sns-login {
+	  background-color: #fff;
+	  border: none;
+	  text-align: center;
+	  cursor: pointer;
+	  padding: 0;
+}
+
+.icon-sns {
+	  display: block;
+	  width: 54px;
+	  height: 54px;
+	  background-position: center center;
+	  background-size: 54px 54px;
+	  background-repeat: no-repeat;
+}
+
+.icon-sns.icon-kakao {
+	  background-image: url("../img/icon-kakao.png");
+}
+
+.icon-sns.icon-naver {
+    background-image: url("../img/icon-naver.png");
+}
+
+.icon-sns.icon-apple {
+	  background-image: url("../img/icon-apple.png");
+}
+
+.icon-sns.icon-facebook {
+    background-image: url("../img/icon-facebook.png");
+}
+
+.corp {
+	  margin-top: 40px;
+	  width: 100%;
+	  text-align: center;
+	  font-family: "SF Pro Text";
+	  font-style: normal;
+	  font-weight: 400;
+	  font-size: 12px;
+	  line-height: 150%;
+	  color: #7e8082;
+}
+
+
