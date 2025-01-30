@@ -8,6 +8,7 @@ import OrderList from "./pages/order/OrderList";
 import BoardList from "./pages/board/BoardList";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import UpdateMember from "./pages/member/UpdateMember";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
 
         <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
 
+        <Route path='/BookMarket/members/:id/update' exact={true} element={<UpdateMember />}></Route>
       </Routes>
       <Footer />
     </div>

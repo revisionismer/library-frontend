@@ -108,8 +108,9 @@ const AddBook = () => {
                                         </div>
                                     </div>
                                     <div className="mb-3 row">
-                                        <div className="col-sm-offset-2 col-sm-10" >
-                                            <button type="submit" className="btn btn-primary">submit</button>
+                                        <div id='bookWriteBtnArea' className="col-sm-offset-2 col-sm-10" >
+                                            <button type="button" className="btn btn-primary">submit</button>
+                                            <button type="button" className="btn btn-danger">cancel</button>
                                         </div>
                                     </div>
                                 </form>

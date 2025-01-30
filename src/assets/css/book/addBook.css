@@ -23,3 +23,13 @@
 #addbook #bookWriteForm {
     margin: 10px 0px;
 }
+
+#addbook #bookWriteForm #bookWriteBtnArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addbook #bookWriteForm #bookWriteBtnArea button {
+    margin-right: 2px;
+}

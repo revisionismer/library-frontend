@@ -5,4 +5,5 @@
 3. AddBook(도서등록), Cart(장바구니) 페이지 html, css 적용
 4. OrderList(주문목록) 페이지 html, css 적용
 5. BoardList(게시판 목록) 페이지 html, css 적용
-6. SignUp(회원가입), SignIn(로그인) 페이지 html, csss 적용
+6. SignUp(회원가입), SignIn(로그인) 페이지 html, css 적용
+7. UpdateMember(회원수정) 페이지 html, css 적용

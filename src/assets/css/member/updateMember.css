@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+#updatemember {
+    height: 100vh;
+}
+
+#updatemember a {
+    text-decoration: none;
+}
+
+#updatemember a:hover {
+    color: #ddd;
+}
+
+#updatemember_area {
+    border : 1px solid #ddd;
+    padding: 10px 20px; 
+
+}
+
+#updatemember_area #updatememberBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#updatemember_area #updatememberBtn input {
+    margin-right: 2px;
+}
