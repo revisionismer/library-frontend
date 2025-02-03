@@ -82,14 +82,7 @@ const BoardList = () => {
                                         <span></span>
                                     </div>
 
-                                    <div id='boardWriteBtnArea'>
-                                        <div className="row" style={{ paddingTop: '20px' }}>
-                                            <div className="col-auto mr-auto"></div>
-                                            <div className="col-auto">
-                                                <Link className="btn btn-primary" to={`/BookMarket/board/write`} role="button">글쓰기</Link>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
