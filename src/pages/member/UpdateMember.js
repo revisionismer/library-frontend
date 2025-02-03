@@ -75,13 +75,12 @@ const UpdateMember = () => {
                                     </div>
                                 </div>
 
-                                <div className="mb-3 row">
-                                    <div id='updatememberBtn' className="col-sm-offset-2 col-sm-10">
-                                        <input type="button" className="btn btn-success" value="수정" />
-                                        <input type="button" className="btn btn-danger" value="삭제" />
-                                        <input type="button" className="btn btn-secondary" value="취소" />
-                                    </div>
+                                <div id='updatememberBtn'>
+                                    <input type="button" className="btn btn-success" value="수정" />
+                                    <input type="button" className="btn btn-danger" value="삭제" />
+                                    <input type="button" className="btn btn-secondary" value="취소" />
                                 </div>
+
                             </form>
                         </div>
                     </div>

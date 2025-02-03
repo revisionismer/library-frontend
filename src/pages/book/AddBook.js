@@ -107,12 +107,12 @@ const AddBook = () => {
                                             <input type="file" name="bookImage" className="form-control" />
                                         </div>
                                     </div>
-                                    <div className="mb-3 row">
-                                        <div id='bookWriteBtnArea' className="col-sm-offset-2 col-sm-10" >
-                                            <button type="button" className="btn btn-primary">submit</button>
-                                            <button type="button" className="btn btn-danger">cancel</button>
-                                        </div>
+
+                                    <div id='bookWriteBtnArea'>
+                                        <button type="button" className="btn btn-primary">submit</button>
+                                        <button type="button" className="btn btn-danger">cancel</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
