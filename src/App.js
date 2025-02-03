@@ -9,6 +9,8 @@ import BoardList from "./pages/board/BoardList";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import UpdateMember from "./pages/member/UpdateMember";
+import BookList from "./pages/book/BookList";
+import DetailBook from "./pages/book/DetailBook";
 
 
 function App() {
@@ -41,7 +43,11 @@ function App() {
       <Header />
       <Routes>
         <Route path='/*' exact={true} element={<Home />}></Route>
+
         <Route path='/BookMarket/books/add' exact={true} element={<AddBook />}></Route>
+        <Route path='/BookMarket/books' exact={true} element={<BookList />}></Route>
+        <Route path='/BookMarket/books/:id/detail' exact={true} element={<DetailBook />}></Route>
+
         <Route path='/BookMarket/cart' exact={true} element={<Cart />}></Route>
         <Route path='/BookMarket/order/list' exact={true} element={<OrderList />}></Route>
 
