@@ -2,7 +2,113 @@ import React, { useEffect, useState } from 'react';
 
 import '../assets/css/sign.css';
 
+import axios from 'axios';
+
+import { Link, Navigate, json, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 const SignUp = () => {
+
+    const navigate = useNavigate();
+
+    function signUp() {
+
+        const username = document.getElementById('input-login-username').value;
+        const password = document.getElementById('input-login-password').value;
+        const password_chk = document.getElementById('input-login-password_chk').value;
+        const name = document.getElementById('input-login-name').value;
+        const phone = document.getElementById('input-login-phone').value;
+
+        // 1-5. 이메일 형식 체크 정규식
+        const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
+        if (!email_regex.test(username)) {
+            alert("이메일 형식에 맞지 않습니다.");
+            document.getElementById("input-login-username").focus();
+            return false;
+        }
+
+        if (password !== password_chk) {
+            alert("비밀번호가 서로 다릅니다.");
+            document.getElementById("input-login-password").value = '';
+            document.getElementById("input-login-password_chk").value = '';
+            document.getElementById("input-login-password").focus();
+            return false;
+        }
+
+        if (name === '') {
+            alert("이름은 비어있을 수 없습니다.");
+            document.getElementById("input-login-name").focus();
+            return false;
+        }
+
+        if (phone === '') {
+            alert("전화번호는 비어있을 수 없습니다.");
+            document.getElementById("input-login-phone").focus();
+            return false;
+        }
+
+        var signUpObject = {
+            username: username,
+            password: password,
+            name: name,
+            phone: phone
+        }
+
+        console.log(signUpObject);
+
+        axios.post('/api/auth/join',
+            // 1-1. 첫번째 인자 값 : 서버로 보낼 데이터
+            JSON.stringify(signUpObject),
+            // 1-2. 두번째 인자값 : headers 에 세팅할 값들 ex) content-type, media 방식 등
+            {
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                }
+            }
+            // 1-3. 성공
+        ).then(function (res) {
+            console.log(res);
+            alert(res.data.message);
+
+            navigate("/signin");
+
+            // 1-4. 실패
+        }).catch(function (res) {
+            console.log(res);
+            if (res.response.status === 500) {
+                alert(res.response.statusText);
+                return;
+            }
+
+            if (res.response.data.message === '중복된 아이디입니다.') {
+                alert(res.response.data.message);
+
+                document.getElementById("span-login-username").style.display = 'block';
+                document.getElementById("span-login-password").style.display = 'block';
+                document.getElementById("span-login-password_chk").style.display = 'block';
+                document.getElementById("span-login-name").style.display = 'block';
+                document.getElementById("span-login-phone").style.display = 'block';
+
+                document.getElementById("input-login-username").value = '';
+                document.getElementById("input-login-password").value = '';
+                document.getElementById("input-login-password_chk").value = '';
+                document.getElementById("input-login-name").value = '';
+                document.getElementById("input-login-phone").value = '';
+
+                return;
+            }
+
+            if (res.data.username === "이메일 형식으로 적어주세요.") {
+                alert(res.data.username);
+                document.getElementById("span-login-username").style.display = 'block';
+                document.getElementById("input-login-username").value = '';
+                return;
+            }
+
+
+        })
+    }
+
 
     useEffect(() => {
 
