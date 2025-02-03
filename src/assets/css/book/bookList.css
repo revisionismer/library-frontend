@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+#bookList {
+    height: 140vh;
+}
+
+#bookList a {
+    text-decoration: none;
+}
+
+#bookList a:hover {
+    color: #ddd;
+}
+
+#bookList_area {
+    border : 1px solid #ddd;
+    padding: 10px 10px; 
+    height: 90vh;  
+    
+}
+
+#bookList_area table {
+    width: 76vw;
+    margin: 0 auto;
+}
+
+#bookList_area table tbody td {
+    border-bottom: 1px solid #ddd;
+}
+
+#boardList_area #paging > div > span {
+  
+}
