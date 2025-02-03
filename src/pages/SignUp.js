@@ -1,8 +1,109 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import '../assets/css/sign.css';
 
 const SignUp = () => {
+
+    useEffect(() => {
+
+        const loginIdInput = document.querySelector('#input-login-username');
+        const loginPwInput = document.querySelector('#input-login-password');
+        const loginPwChkInput = document.querySelector('#input-login-password_chk');
+        const loginNameInput = document.querySelector('#input-login-name');
+        const loginPhoneInput = document.querySelector('#input-login-phone');
+
+        const loginIdSpan = document.querySelector('#span-login-username');
+        const loginPwSpan = document.querySelector('#span-login-password');
+        const loginPwChkSpan = document.querySelector('#span-login-password_chk');
+        const loginNameSpan = document.querySelector('#span-login-name');
+        const loginPhoneSpan = document.querySelector('#span-login-phone');
+
+        loginIdInput.addEventListener('click', () => {
+            loginIdInput.classList.toggle('isTyping');
+
+        });
+
+        loginIdInput.addEventListener('focusout', () => {
+            loginIdInput.classList.remove('isTyping');
+
+            if (loginIdInput.value) {
+                loginIdSpan.style.display = 'none';
+            } else {
+                loginIdSpan.style.display = 'block';
+            }
+
+        })
+
+        loginPwInput.addEventListener('click', () => {
+            loginPwInput.classList.toggle('isTyping');
+
+        });
+
+        loginPwInput.addEventListener('focusout', () => {
+            loginPwInput.classList.remove('isTyping');
+
+            if (loginPwInput.value) {
+                loginPwSpan.style.display = 'none';
+            } else {
+                loginPwSpan.style.display = 'block';
+            }
+        })
+
+        loginPwChkInput.addEventListener('click', () => {
+            loginPwChkInput.classList.toggle('isTyping');
+
+        });
+
+        loginPwChkInput.addEventListener('focusout', () => {
+            loginPwChkInput.classList.remove('isTyping');
+
+            if (loginPwChkInput.value) {
+                loginPwChkSpan.style.display = 'none';
+            } else {
+                loginPwChkSpan.style.display = 'block';
+            }
+        })
+
+        loginNameInput.addEventListener('click', () => {
+            loginNameInput.classList.toggle('isTyping');
+
+        });
+
+        loginNameInput.addEventListener('focusout', () => {
+            loginNameInput.classList.remove('isTyping');
+
+            if (loginNameInput.value) {
+                loginNameSpan.style.display = 'none';
+            } else {
+                loginNameSpan.style.display = 'block';
+            }
+        })
+
+        loginPhoneInput.addEventListener('click', () => {
+            loginPhoneInput.classList.toggle('isTyping');
+
+        });
+
+        loginPhoneInput.addEventListener('focusout', () => {
+            loginPhoneInput.classList.remove('isTyping');
+
+            if (loginPhoneInput.value) {
+                loginPhoneSpan.style.display = 'none';
+            } else {
+                loginPhoneSpan.style.display = 'block';
+            }
+        })
+
+        // 회원 가입 버튼 누르면 페이지 이동
+        const cancelSignUpBtn = document.querySelector('.cancel-button');
+
+        cancelSignUpBtn.addEventListener('click', () => {
+            location.href = "/home";
+        });
+
+
+    }, []);
+
     return (
         <div className='wrapper'>
             <div className='title-description'>

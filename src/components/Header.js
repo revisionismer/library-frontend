@@ -1,11 +1,85 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import Base64 from 'base-64';
+
+import { Link, Navigate, json, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 
 import { Dropdown } from 'react-bootstrap';
 
 import '../assets/css/layout/header.css';
 
 const Header = () => {
+    const navigate = useNavigate();
+
+    var ACCESS_TOKEN = getCookie('access_token');
+
+    function getCookie(key) {
+
+        let result = null;
+        let cookie = document.cookie.split(';');
+
+        cookie.some(function (item) {
+            item = item.replace(' ', '');
+
+            let dic = item.split('=');
+
+            if (key === dic[0]) {
+                result = dic[1];
+                return true;
+            }
+            return false;
+        });
+        return result;
+    }
+
+    // 2024-07-17 : base64로 로그인 정보 꺼내오기
+    // 2024-07-18 : 토큰이 없다면 서버에서 예외터지도록 변경
+    let payload;
+    let loginUser;
+
+    if (ACCESS_TOKEN != null) {
+        payload = ACCESS_TOKEN.substring(ACCESS_TOKEN.indexOf('.') + 1, ACCESS_TOKEN.lastIndexOf('.'));
+        loginUser = JSON.parse(Base64.decode(payload));
+
+        console.log(loginUser);
+    }
+
+    function logout() {
+
+        axios.get('/api/auth/logout',
+            // 1-1. 첫번째 인자 값 : 서버로 보낼 데이터
+            null,
+            // 1-2. 두번째 인자값 : headers 에 세팅할 값들 ex) content-type, media 방식 등
+            {
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                }
+            }
+        ).then(function (res) {
+            console.log(res);
+
+            deleteCookie('access_token');
+
+            navigate("/signin");
+
+        }).catch(function (res) {
+            console.log(res);
+            if (res.response.status === 500) {
+                alert(res.response.statusText);
+                return;
+            }
+
+            alert(res.response.data.message);
+            return;
+        })
+    }
+
+    function deleteCookie(key) {
+        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
     return (
         <>
             <header className="py-3 mb-4 border-bottom">
@@ -30,15 +104,42 @@ const Header = () => {
 
                     &nbsp;| &nbsp;
 
-                    <Link to="/BookMarket/books/add" className="nav-link">도서등록 &nbsp;| &nbsp; </Link>
-                    <Link to="/BookMarket/cart" className="nav-link">장바구니 &nbsp;| &nbsp;  </Link>
-                    <Link to="/BookMarket/order/list" className="nav-link">주문목록 &nbsp;| &nbsp;   </Link>
-                    <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp; </Link>
-                    <Link to="/signup" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
-                    <Link to="/signin" className="nav-link">로그인 &nbsp;| &nbsp;</Link>
-                    <Link to="/BookMarket/members/1/update" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
-                    <Link to="/BookMarket/logout" className="nav-link">로그아웃 &nbsp;| &nbsp;</Link>
-                    <b><span>회원</span>님</b>
+                    {ACCESS_TOKEN != null && loginUser.role === 'ADMIN' ?
+                        <Link to="/BookMarket/books/add" className="nav-link">도서등록 &nbsp;| &nbsp; </Link>
+                        :
+                        ''
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <Link to="/BookMarket/cart" className="nav-link">장바구니 &nbsp;| &nbsp;  </Link>
+                        :
+                        ''
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <Link to="/BookMarket/order/list" className="nav-link">주문목록 &nbsp;| &nbsp;   </Link>
+                        :
+                        ''
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp; </Link>
+                        :
+                        ''
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <Link to="/BookMarket/members/1/update" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
+                        :
+                        <Link to="/signup" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <Link to="/BookMarket/logout" className="nav-link" onClick={() => logout()}>로그아웃 &nbsp;| &nbsp;</Link>
+                        :
+                        <Link to="/signin" className="nav-link">로그인 &nbsp;| &nbsp;</Link>
+                    }
+                    {ACCESS_TOKEN != null ?
+                        <b><span>{loginUser.username}</span></b>
+                        :
+                        ''
+                    }
+
                 </div>
             </header>
         </>

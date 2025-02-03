@@ -7,3 +7,4 @@
 5. BoardList(게시판 목록) 페이지 html, css 적용
 6. SignUp(회원가입), SignIn(로그인) 페이지 html, css 적용
 7. UpdateMember(회원수정) 페이지 html, css 적용
+8. 접근 권한 분기 처리 및 회원 가입 페이지 input box 이벤트 추가

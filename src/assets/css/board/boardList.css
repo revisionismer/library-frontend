@@ -14,7 +14,7 @@
 
 #boardList_area {
     border : 1px solid #ddd;
-    padding: 10px 20px; 
+    padding: 10px 0px; 
   
     display: flex;
     
@@ -22,7 +22,8 @@
 }
 
 #boardList_area table {
-    width: 80vw;
+    width: 76vw;
+    margin: 0 auto;
 }
 
 #boardList_area table tbody td {
