@@ -56,7 +56,7 @@ const SignUp = () => {
 
         console.log(signUpObject);
 
-        axios.post('/api/auth/join',
+        axios.post('http://127.0.0.1:8080/api/auth/join',
             // 1-1. 첫번째 인자 값 : 서버로 보낼 데이터
             JSON.stringify(signUpObject),
             // 1-2. 두번째 인자값 : headers 에 세팅할 값들 ex) content-type, media 방식 등
