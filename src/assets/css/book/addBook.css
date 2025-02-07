@@ -11,9 +11,10 @@
 
 #book_status {
     display: flex;
-    width: 15vw;
+    width: 12vw;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 #text-end a {

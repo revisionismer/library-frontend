@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../../assets/css/book/bookList.css';
@@ -20,7 +20,7 @@ const BookList = () => {
                     <div id='bookList_area'>
                         <div className="row align-items-md-stretch">
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
@@ -28,7 +28,7 @@ const BookList = () => {
                                 <p><Link to={`/BookMarket/books/1/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                             </div>
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
@@ -36,7 +36,7 @@ const BookList = () => {
                                 <p><Link to={`/BookMarket/books/2/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                             </div>
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
@@ -44,7 +44,7 @@ const BookList = () => {
                                 <p><Link to={`/BookMarket/books/3/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                             </div>
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
@@ -52,7 +52,7 @@ const BookList = () => {
                                 <p><Link to={`/BookMarket/books/4/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                             </div>
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
@@ -60,7 +60,7 @@ const BookList = () => {
                                 <p><Link to={`/BookMarket/books/5/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                             </div>
                             <div className="col-md-4">
-                                <img src={none} alt="image" style={{ width: '100%', height: '60%' }} />
+                                <img src={none} alt="image" style={{ width: '60%' }} />
                                 <h3>none.gif</h3>
                                 <p>작가</p>
                                 <p>출판사</p>
