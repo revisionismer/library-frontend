@@ -11,14 +11,6 @@ body {
 	height: 100%;
 }
 
-textarea,
-input {
-	outline: none;
-	appearance: none;
-	-webkit-appearance: none;
-	border-radius: 0;
-}
-
 span {
 	-moz-user-select: none;
 	-webkit-user-select: none;
