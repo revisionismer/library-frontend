@@ -182,11 +182,16 @@ const AddBook = () => {
                     <div id='addbook_area'>
                         <div className="row align-items-md-stretch">
                             <div id='text-end' className="text-end" style={{ padding: '10px', borderBottom: '1px  solid #ddd' }}>
-                                <form action="/BookMarket/logout" method="POST">
-                                    <Link to="?lang=ko" style={{ textDecorationLine: 'none' }}>Korean</Link>|
-                                    <Link to="?lang=en" style={{ textDecorationLine: 'none' }}>English</Link>
-                                    <input type="button" className="btn btn-sm btn-success" value="Logout" />
-                                </form>
+
+                                <Link to="?lang=ko" style={{ textDecorationLine: 'none' }}>Korean</Link>|
+                                <Link to="?lang=en" style={{ textDecorationLine: 'none' }}>English</Link>
+                                {ACCESS_TOKEN !== null ?
+                                    <input type="button" className="btn btn-sm btn-danger" value="Logout" />
+                                    :
+                                    <input type="button" className="btn btn-sm btn-success" value="LogIn" />
+                                }
+
+
                             </div>
                             <legend className='text-end'></legend>
                             <div id='bookWriteForm'>

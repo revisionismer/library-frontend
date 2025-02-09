@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #bookList {
-    height: 140vh;
+    height: 158vh;
 }
 
 #bookList a {
@@ -15,7 +15,7 @@
 #bookList_area {
     border : 1px solid #ddd;
     padding: 10px 10px; 
-    height: 95vh;  
+    height: 124vh;  
     
 }
 
@@ -30,4 +30,26 @@
 
 #boardList_area #paging > div > span {
   
+}
+
+@media (max-width:1023px) {
+	
+}
+
+@media (max-width:767px) {
+
+    footer {
+        display: none;
+    }
+
+    #bookList {
+        height: 100%;
+    }
+
+    #bookList_area {
+        border: 1px solid #ddd;
+        padding: 10px 10px;
+        height: 100%;
+    }
+
 }
