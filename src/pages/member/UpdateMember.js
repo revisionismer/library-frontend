@@ -51,7 +51,7 @@ const UpdateMember = () => {
     useEffect(() => {
 
         const getUser = async () => {
-            axios.get(`http://127.0.0.1:8080/api/users/${userId}/info`,
+            axios.get(`http://127.0.0.1:8080/api/users/s/${userId}/info`,
                 {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
