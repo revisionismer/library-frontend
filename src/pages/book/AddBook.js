@@ -70,8 +70,6 @@ const AddBook = () => {
 
     }, []);
 
-
-
     useEffect(() => {
 
         let f;
