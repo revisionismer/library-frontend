@@ -1,13 +1,88 @@
 @charset "UTF-8";
 
+.d-flex {
+    display: flex;
+}
+
+.repImgDiv {
+    margin-right: 15px;
+    height: auto;
+    width: 50%;
+}
+
+.detail {
+    padding-top: 0;
+}
+
+.lead {
+    font-size: 15px;
+    color: gray;
+}
+
+.wd40 {
+    width: 40%;
+    height: auto;
+}
+
+.wd50 {
+    width: 50%;
+    height: auto;
+}
+
+.wd60 {
+    width: 60%;
+    height: auto;
+}
+
+.wd70 {
+    width: 70%;
+    height: auto;
+}
+
+.mgt-50 {
+    margin-top: 50px;
+}
+.mgt-30 {
+    margin-top: 30px;
+}
+
+.mgb-15 {
+    margin-bottom: 15px;
+}
+.mgb-30 {
+    margin-bottom: 30px;
+}
+.mgb-50 {
+    margin-bottom: 50px;
+}
+.my-4 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.my-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.text-right {
+    text-align: right;
+}
+
 #bookInfo {
     width: 100%;
-    height: 90vh;
+    height: 120vh;
 }
 
 #bookInfo_area {
     border : 1px solid #ddd;
     padding: 10px 20px; 
+    display: flex;
+    flex-direction: column;    
+    height: 90vh;
 }
 
 #bookInfo_area .text-center {
@@ -15,7 +90,30 @@
     margin-top: 10px;
 }
 
-#bookInfo_area #bookBtn_area button {
+#bookInfo_area #bookBtn_area button, a {
     margin-right: 5px;
 }
 
+#bookInfo_area #detailBookArea {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    width: 80%; 
+}
+
+#bookInfo_area #detailBookArea #bookName {
+    margin-top: 10px;
+}
+
+#bookInfo_area #detailBookArea #bookDetailBtn {
+    display: flex;
+    justify-content: right;
+}
+
+#bookInfo_area #detailBookArea #itemCntArea {
+    justify-content: flex-start;
+}
+
+#bookInfo_area #detailBookArea #itemCntArea #itemCntText {
+    margin-right: 5px;
+}
