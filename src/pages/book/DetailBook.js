@@ -52,7 +52,21 @@ const DetailBook = () => {
         document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
-    const [book, setBook] = useState([]);
+    const [book, setBook] = useState({
+        bookId: null,
+        bookName: '',
+        author: '',
+        description: '',
+        category: '',
+        publisher: '',
+        bookCondition: '',
+        bookImageUrl: '',
+        fileName: '',
+        releaseDate: '',
+        unitPrice: null,
+        unitsInStock: null,
+        userId: null
+    });
 
     var bookId = id;
 
@@ -75,6 +89,7 @@ const DetailBook = () => {
                 setBook(res.data.data);
 
                 bookImg.src = "/bookImg/" + res.data.data.bookImageUrl;
+                bookImg.value = res.data.data.bookImageUrl;
 
             }).catch(function (res) {
                 console.log(res);
@@ -99,7 +114,27 @@ const DetailBook = () => {
         }
 
         getBook();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        calculateTotalPrice();
+
+        document.querySelector("#count").addEventListener('change', () => {
+            calculateTotalPrice();
+        })
+
+    }, []);
+
+    function calculateTotalPrice() {
+
+        var count = document.querySelector("#count").value;
+        var price = document.querySelector("#price").value;
+
+        var totalPrice = price * count;
+
+        document.querySelector("#totalPrice").innerHTML = totalPrice + '원';
+
+    }
 
     return (
         <>
@@ -113,49 +148,96 @@ const DetailBook = () => {
                     </div>
 
                     <div id='bookInfo_area'>
-                        <div className="row align-items-md-stretch">
-                            <div className="col-md-4">
-                                <div className='text-center'>
-                                    <img id='bookImg' src={none} style={{ width: '60%', height: '250px' }} />
-                                </div>
-                                <div className="text-center">
-                                    <button type='button' id='bookImgDownBtn'>이미지다운로드</button>
-                                </div>
+                        <input type="hidden" id="itemId" defaultValue="" />
+
+                        <div id='detailBookArea'>
+
+                            <div className="repImgDiv">
+                                <img id='bookImg' className="rounded repImg" src={none} width="300" height="300" />
                             </div>
-                            <div className="col-md-8">
-                                <h3>{book.bookName}</h3>
-                                <p>{book.description}</p>
-                                <br />
-                                <p><b>도서코드 : </b>
+                            <div className="wd40">
+                                <div id='bookCondition' className='mb30'>
                                     {book.bookCondition === 'NEWBOOK' ?
-                                        <span className="badge text-bg-info">신규도서</span>
+                                        <span id='bookCondition' className="badge text-bg-info">신규도서</span>
                                         :
                                         ''
                                     }
                                     {book.bookCondition === 'USEDBOOK' ?
-                                        <span className="badge text-bg-warning">중고도서</span>
+                                        <span id='bookCondition' className="badge text-bg-warning">중고도서</span>
                                         :
                                         ''
                                     }
                                     {book.bookCondition === 'EBOOK' ?
-                                        <span className="badge text-bg-success">전자책</span>
+                                        <span id='bookCondition' className="badge text-bg-success">전자책</span>
                                         :
                                         ''
                                     }
-                                </p>
-                                <p><b>저자</b> : <span>{book.author}</span></p>
-                                <p><b>출판사</b> : <span>{book.publisher}</span></p>
-                                <p><b>출판일</b> : <span>{book.releaseDate}</span></p>
-                                <p><b>분류</b> : <span>{book.category}</span></p>
-                                <p><b>재고</b> : <span>{book.unitsInStock}</span></p>
-                                <p><b>가격</b> : <span>{book.unitPrice}</span></p>
-                                <br />
-
-                                <div id='bookBtn_area'>
-                                    <button id='bookAddBtn' className='btn btn-primary'>도서 주문 &raquo;</button>
-                                    <Link to={`/BookMarket/books`} className='btn btn-secondary'>도서 목록 &raquo;</Link>
                                 </div>
+                                <div id='bookName' className="h4">{book.bookName}</div>
+                                <hr className="my-4" />
+
+                                <div className="text-right">
+
+                                    <div id='itemCntArea' className="input-group">
+                                        <div id='itemCntText' className="input-group-prepend">
+                                            <span className="input-group-text">수량</span>
+                                        </div>
+                                        <div id='countArea'>
+                                            {book.unitsInStock === 0 ?
+                                                <div className="text-right">
+                                                    <input type="text" id="count" name="count" className="form-control" defaultValue="0" readOnly />
+                                                </div>
+                                                :
+                                                <div className="text-right">
+                                                    <input type="text" id="count" name="count" className="form-control" defaultValue="0" minLength="1" maxLength="3" style={{ width: '35px' }} />
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="h4 text-danger text-left">
+                                        <input type="hidden" id="price" name="price" defaultValue={book.unitPrice} />
+                                        <span>{book.unitPrice}</span>원
+                                    </div>
+                                </div>
+                                <hr className="my-10" />
+
+                                <div className="text-right mgt-50">
+                                    {book.unitsInStock === 0 ?
+                                        <div className="text-right">
+                                            <h5>입고 예정입니다.</h5>
+                                        </div>
+                                        :
+                                        <div className="text-right">
+                                            <h5 className='mr-5'>결제 금액</h5>
+                                            <h3 id="totalPrice" className="font-weight-bold">0</h3>
+                                        </div>
+                                    }
+                                </div>
+                                {book.unitsInStock === 0 ?
+                                    <div id='bookDetailBtn' className="text-right mgt-50">
+                                        <button type="button" className="btn btn-danger btn-lg">품절</button>
+                                    </div>
+                                    :
+                                    <div id='bookDetailBtn' className="text-right mgt-50">
+                                        <button type="button" className="btn btn-secondary btn-lg" style={{ marginRight: '5px ' }}>장바구니</button>
+                                        <button type="button" className="btn btn-primary btn-lg">주문하기</button>
+                                    </div>
+                                }
+
                             </div>
+
+                        </div>
+
+                        <div className="detail jumbotron jumbotron-fluid mgt-30">
+                            <div className="container">
+                                <h4>상품 상세 설명</h4>
+                                <hr className="my-4" />
+                                <p className="lead">소개글</p>
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            {book.description}
                         </div>
                     </div>
                 </div>
