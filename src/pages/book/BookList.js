@@ -105,18 +105,31 @@ const BookList = () => {
 
                     <div id='bookList_area'>
                         <div className="row align-items-md-stretch">
-                            {books.map((book, index) => {
-                                return (
-                                    <div className="col-md-4" key={index}>
-                                        <img src={`/bookImg/${book.bookImageUrl}`} alt="image" style={{ width: '45%', height: '45%' }} />
-                                        <h3>{book.bookName}</h3>
-                                        <p>{book.author}</p>
-                                        <p>{book.publisher}</p>
-                                        <p style={{ textAlign: 'left' }}>{book.unitPrice}</p>
-                                        <p><Link to={`/BookMarket/books/${book.bookId}/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
-                                    </div>
-                                )
-                            })}
+                            {books == 0 ?
+                                <div id='isBookText'>
+                                    <p>등록된 책이 없습니다.</p>
+                                </div>
+
+                                :
+
+                                books.map((book, index) => {
+                                    return (
+                                        <div className="col-md-4" key={index}>
+                                            <div className='card' style={{ marginBottom: '10px', padding: '10px' }}>
+                                                <div id='bookInfoArea'>
+                                                    <img src={`/bookImg/${book.bookImageUrl}`} alt="image" style={{ width: '99%', height: '45vh' }} />
+                                                    <h3>{book.bookName}</h3>
+                                                    <p>{book.author}</p>
+                                                    <p>{book.publisher}</p>
+                                                    <p style={{ textAlign: 'left' }}>{book.unitPrice}</p>
+                                                    <p><Link to={`/BookMarket/books/${book.bookId}/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+
 
                         </div>
                     </div>
