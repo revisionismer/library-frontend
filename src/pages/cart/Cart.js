@@ -56,7 +56,7 @@ const Cart = () => {
 
     useEffect(() => {
         const getCarts = async () => {
-            axios.get(`http://127.0.0.1:8080/api/carts/s/all`,
+            axios.get(`http://127.0.0.1:8080/api/carts/s/cartItem/all`,
                 {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
