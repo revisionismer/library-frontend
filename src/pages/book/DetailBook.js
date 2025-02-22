@@ -117,6 +117,62 @@ const DetailBook = () => {
     }, []);
 
     useEffect(() => {
+
+        document.querySelector("#cartBookBtn").addEventListener('click', () => {
+            var totalPrice = document.querySelector("#totalPrice");
+            var price = document.querySelector("#price");
+            var count = document.querySelector("#count");
+
+            if (Number.parseInt(totalPrice.innerHTML) === 0) {
+                alert("1개 이상 장바구니에 담아야합니다.");
+                count.focus();
+                return;
+            }
+
+            const cartItemObj = {
+                bookId: bookId,
+                count: count.value
+            }
+
+            axios.post(`http://127.0.0.1:8080/api/carts/s/cartItem/add`,
+                // 1-1. 첫번째 인자 값 : 서버로 보낼 데이터
+                JSON.stringify(cartItemObj),
+                // 1-2. 두번째 인자값 : headers 에 세팅할 값들 ex) content-type, media 방식 등
+                {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Authorization': 'Bearer ' + ACCESS_TOKEN
+                    }
+                }
+            ).then(function (res) {
+                console.log(res);
+
+
+            }).catch(function (res) {
+                console.log(res);
+
+                if (res.code === "ERR_NETWORK") {
+                    console.log("서버와의 연결이 되어 있지 않습니다.");
+                    return false;
+
+                }
+
+                if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                    // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                    alert(res.response.data.message);
+
+                    // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                    deleteCookie('access_token');
+                    navigate("/signin");
+                    return;
+                }
+            })
+
+        });
+
+    }, [])
+
+    useEffect(() => {
         calculateTotalPrice();
 
         document.querySelector("#count").addEventListener('change', () => {
@@ -134,6 +190,26 @@ const DetailBook = () => {
 
         document.querySelector("#totalPrice").innerHTML = totalPrice + '원';
 
+    }
+
+    function limitDigits(event, unitsInStock) {
+
+        const count = document.querySelector("#count");
+
+        var special_pattern = /[`~.!@#$%^&*|\\\'\";:\/?]/gi;
+
+        if (special_pattern.test(event.target.value)) {
+            alert("정수 값만 입력해주세요.");
+            count.value = 0;
+            return false;
+
+        }
+
+        if (event.target.value > unitsInStock) {
+            alert(`주문할 수 있는 제품 수량은 ${unitsInStock}개까지 입니다.(현재 재고 : ${unitsInStock})`);
+            count.value = 0;
+            return false;
+        }
     }
 
     return (
@@ -185,15 +261,17 @@ const DetailBook = () => {
                                         <div id='countArea'>
                                             {book.unitsInStock === 0 ?
                                                 <div className="text-right">
-                                                    <input type="text" id="count" name="count" className="form-control" defaultValue="0" readOnly />
+                                                    <input type="number" id="count" name="count" className="form-control" defaultValue="0" onChange={() => limitDigits()} readOnly />
                                                 </div>
                                                 :
                                                 <div className="text-right">
-                                                    <input type="text" id="count" name="count" className="form-control" defaultValue="0" minLength="1" maxLength="3" style={{ width: '35px' }} />
+                                                    <input type="number" id="count" name="count" className="form-control" defaultValue="0" max="999" onChange={(event) => limitDigits(event, book.unitsInStock)} style={{ width: '35px' }} />
                                                 </div>
                                             }
                                         </div>
+                                        <p style={{ margin: '5px 2px' }}>(재고 : {book.unitsInStock})</p>
                                     </div>
+
                                     <div className="h4 text-danger text-left">
                                         <input type="hidden" id="price" name="price" defaultValue={book.unitPrice} />
                                         <span>{book.unitPrice}</span>원
@@ -219,8 +297,8 @@ const DetailBook = () => {
                                     </div>
                                     :
                                     <div id='bookDetailBtn' className="text-right mgt-50">
-                                        <button type="button" className="btn btn-secondary btn-lg" style={{ marginRight: '5px ' }}>장바구니</button>
-                                        <button type="button" className="btn btn-primary btn-lg">주문하기</button>
+                                        <button type="button" id='cartBookBtn' className="btn btn-secondary btn-lg" style={{ marginRight: '5px ' }}>장바구니</button>
+                                        <button type="button" id='orderBootBtn' className="btn btn-primary btn-lg">주문하기</button>
                                     </div>
                                 }
 

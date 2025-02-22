@@ -13,7 +13,6 @@ import BookList from "./pages/book/BookList";
 import DetailBook from "./pages/book/DetailBook";
 import OrderConfirmation from "./pages/order/OrderConfirmation";
 
-
 function App() {
 
   const { pathname } = useLocation();
