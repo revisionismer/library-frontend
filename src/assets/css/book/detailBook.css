@@ -90,7 +90,7 @@
     margin-top: 10px;
 }
 
-#bookInfo_area #bookBtn_area button, a {
+#bookInfo_area #bookBtn_area #bookDetailBtn, #bookDetailBtn button a {
     margin-right: 5px;
 }
 
