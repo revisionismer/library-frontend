@@ -105,22 +105,22 @@ const Header = () => {
                     &nbsp;| &nbsp;
 
                     {ACCESS_TOKEN != null && loginUser.role === 'ADMIN' ?
-                        <Link to="/BookMarket/books/add" className="nav-link">도서등록 &nbsp;| &nbsp; </Link>
+                        <Link to="/BookMarket/books/add" className="nav-link">도서등록 &nbsp;| &nbsp;</Link>
                         :
                         ''
                     }
                     {ACCESS_TOKEN != null ?
-                        <Link to="/BookMarket/cart" className="nav-link">장바구니 &nbsp;| &nbsp;  </Link>
+                        <Link to="/BookMarket/cart" className="nav-link">장바구니 &nbsp;| &nbsp;</Link>
                         :
                         ''
                     }
                     {ACCESS_TOKEN != null ?
-                        <Link to="/BookMarket/order/list" className="nav-link">주문목록 &nbsp;| &nbsp;   </Link>
+                        <Link to="/BookMarket/order/list" className="nav-link">주문목록 &nbsp; | &nbsp;</Link>
                         :
                         ''
                     }
                     {ACCESS_TOKEN != null ?
-                        <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp; </Link>
+                        <Link to="/BookMarket/board/list" className="nav-link">게시판 &nbsp;| &nbsp;</Link>
                         :
                         ''
                     }
