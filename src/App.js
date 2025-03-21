@@ -12,6 +12,7 @@ import UpdateMember from "./pages/member/UpdateMember";
 import BookList from "./pages/book/BookList";
 import DetailBook from "./pages/book/DetailBook";
 import OrderConfirmation from "./pages/order/OrderConfirmation";
+import OrderCustomerInfo from "./pages/order/OrderCustomerInfo";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
 
         <Route path='/BookMarket/order/list' exact={true} element={<OrderList />}></Route>
         <Route path='/BookMarket/order/:id/orderInfo' exact={true} element={<OrderConfirmation />}></Route>
+        <Route path='/BookMarket/order/orderCustomerInfo' exact={true} element={<OrderCustomerInfo />}></Route>
 
         <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
 

@@ -111,48 +111,150 @@ const Cart = () => {
                     cartItemId: td[1].textContent,
                     itemNm: td[2].textContent,
                     price: td[3].textContent,
-                    count: td[4].childNodes[0].value
+                    count: td[4].childNodes[0].value,
+                    unitsInStock: td[5].textContent
                 }
 
             })
 
             console.log(obj);
 
-            axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
-                JSON.stringify(obj),
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' + ACCESS_TOKEN,
-                        'Content-Type': 'application/json; charset=UTF-8'
+            // 장바구니에서 바로 주문하는게 아니라 주문 화면 페이지로 데이터를 들고가서 아래를 실행해야함
+            if (checkboxes.length === 0) {
+                alert("상품이 선택되지 않았습니다. 장바구니를 확인해주세요.");
+                return false;
+            } else {
 
+                checkboxes.forEach((checkbox, index) => {
+
+                    if (Number(obj[index].count) === 0) {
+
+                        alert("1개 이상 주문해야 합니다. 주문 수량을 확인해주세요.");
+                        return false;
+
+                    } else {
+
+                        axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
+                            JSON.stringify(obj),
+                            {
+                                headers: {
+                                    'Authorization': 'Bearer ' + ACCESS_TOKEN,
+                                    'Content-Type': 'application/json; charset=UTF-8'
+
+                                }
+                            }
+                        ).then(function (res) {
+                            console.log(res);
+
+
+                        }).catch(function (res) {
+                            console.log(res);
+
+                            if (res.code === "ERR_NETWORK") {
+                                console.log("서버와의 연결이 되어 있지 않습니다.");
+                                return false;
+
+                            }
+
+                            if (res.response.data.message === '주문 수량이 재고 수량보다 더 많습니다.' || res.response.data.message === '재고가 없습니다.') {
+                                alert(res.response.data.message);
+                                return false;
+                            }
+
+                            if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                                // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                                alert(res.response.data.message);
+
+                                // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                                deleteCookie('access_token');
+                                navigate("/signin");
+                                return;
+                            }
+                        })
                     }
-                }
-            ).then(function (res) {
-                console.log(res);
+                })
 
-
-            }).catch(function (res) {
-                console.log(res);
-
-                if (res.code === "ERR_NETWORK") {
-                    console.log("서버와의 연결이 되어 있지 않습니다.");
-                    return false;
-
-                }
-
-                if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
-                    // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
-                    alert(res.response.data.message);
-
-                    // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
-                    deleteCookie('access_token');
-                    navigate("/signin");
-                    return;
-                }
-            })
-
+            }
         })
     }, [])
+
+    useEffect(() => {
+        // 2025-03-08 : 여기까지
+        document.querySelector('#cartForm').addEventListener('click', (e) => {
+
+            var checkboxes = document.querySelectorAll('input[name="selectBook"]:checked');
+
+            var totalOrderPrice = document.querySelector('#totalOrderPrice');
+
+            var obj = new Object();
+
+            var totalPrice = 0;
+
+            checkboxes.forEach((checkbox, index) => {
+                var tr = checkbox.parentNode.parentNode;
+                var td = tr.childNodes;
+                // obj.push(checkbox.id.slice(11));
+
+                obj[index] = {
+                    cartId: checkbox.id.slice(11),
+                    cartItemId: td[1].textContent,
+                    itemNm: td[2].textContent,
+                    price: td[3].textContent,
+                    count: td[4].childNodes[0].value,
+                    unitsInStock: td[5].textContent
+                }
+
+                td[4].childNodes[0].addEventListener('oninput', (e) => {
+                    ojb[index].count = td[4].childNodes[0].value;
+                })
+
+                totalPrice += Number(td[3].textContent) * Number(td[4].childNodes[0].value);
+
+            })
+
+            totalOrderPrice.innerHTML = totalPrice;
+
+            console.log(checkboxes);
+
+        })
+
+        // 2025-03-14 : 수량 변경에 따른 총합 계산 추가
+        document.querySelector('#cartForm').addEventListener('change', (e) => {
+
+            var checkboxes = document.querySelectorAll('input[name="selectBook"]:checked');
+
+            var totalOrderPrice = document.querySelector('#totalOrderPrice');
+
+            var obj = new Object();
+
+            var totalPrice = 0;
+
+            checkboxes.forEach((checkbox, index) => {
+                var tr = checkbox.parentNode.parentNode;
+                var td = tr.childNodes;
+                // obj.push(checkbox.id.slice(11));
+
+                obj[index] = {
+                    cartId: checkbox.id.slice(11),
+                    cartItemId: td[1].textContent,
+                    itemNm: td[2].textContent,
+                    price: td[3].textContent,
+                    count: td[4].childNodes[0].value,
+                    unitsInStock: td[5].textContent
+                }
+
+                td[4].childNodes[0].addEventListener('oninput', (e) => {
+                    ojb[index].count = td[4].childNodes[0].value;
+                })
+
+                totalPrice += Number(td[3].textContent) * Number(td[4].childNodes[0].value);
+
+            })
+
+            totalOrderPrice.innerHTML = totalPrice;
+        })
+
+    }, []);
 
     return (
         <>
@@ -195,7 +297,7 @@ const Cart = () => {
                                                 <th>도서</th>
                                                 <th>가격</th>
                                                 <th>수량</th>
-                                                <th>비고</th>
+                                                <th>재고</th>
                                                 <th>-</th>
                                             </tr>
                                         </thead>
@@ -204,13 +306,13 @@ const Cart = () => {
                                                 return (
                                                     <tr key={index}>
                                                         <td>
-                                                            <input type='checkbox' id={`selectBook_${cart.cartId}`} name='selectBook' />
+                                                            <input type='checkbox' id={`selectBook_${index + 1}`} name='selectBook' />
                                                         </td>
                                                         <td>{cart.cartItemId}</td>
                                                         <td>{cart.itemNm}</td>
                                                         <td>{cart.price}</td>
                                                         <td><input type='number' id='count' name='count' defaultValue={cart.count} style={{ textAlign: 'center', width: '40px' }} /></td>
-                                                        <td>신청 중</td>
+                                                        <td>{cart.unitsInStock}</td>
                                                         <td>
                                                             {cart.unitsInStock === 0 ?
                                                                 <Link>
@@ -232,9 +334,9 @@ const Cart = () => {
                                 </form>
                                 <div className="text-end" style={{ paddingRight: '30px' }}>
                                     <b> 총액 :
-                                        <span>
-                                            10000원
-                                        </span>
+                                        <span id='totalOrderPrice'>
+                                            0
+                                        </span>원
                                     </b>
                                 </div>
                                 <br />
