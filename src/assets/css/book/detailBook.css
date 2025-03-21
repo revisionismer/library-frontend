@@ -98,7 +98,8 @@
     display: flex;
     margin: 0 auto;
     justify-content: space-between;
-    width: 80%; 
+    width: 70%; 
+    padding: 10px 0;
 }
 
 #bookInfo_area #detailBookArea #bookName {
