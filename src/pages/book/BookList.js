@@ -117,10 +117,11 @@ const BookList = () => {
                                         <div className="col-md-4" key={index}>
                                             <div className='card' style={{ marginBottom: '10px', padding: '10px' }}>
                                                 <div id='bookInfoArea'>
-                                                    <img src={`/bookImg/${book.bookImageUrl}`} alt="image" style={{ width: '99%', height: '45vh' }} />
+                                                    <img src={`/bookImg/${book.bookImageUrl}`} alt="image" style={{ width: '60%', height: '45vh' }} />
                                                     <h3>{book.bookName}</h3>
                                                     <p>{book.author}</p>
-                                                    <p>{book.publisher}</p>
+                                                    <p>{book.publisher} | {book.releaseDate}</p>
+                                                    <p>{book.description}</p>
                                                     <p style={{ textAlign: 'left' }}>{book.unitPrice}</p>
                                                     <p><Link to={`/BookMarket/books/${book.bookId}/detail`} className='btn btn-secondary' role='button'>상세 정보</Link></p>
                                                 </div>
