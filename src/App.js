@@ -55,6 +55,8 @@ function App() {
         <Route path='/BookMarket/order/:id/orderInfo' exact={true} element={<OrderConfirmation />}></Route>
         <Route path='/BookMarket/order/orderCustomerInfo' exact={true} element={<OrderCustomerInfo />}></Route>
 
+        <Route path='/BookMarket/order/orderConfirmation' exact={true} element={<OrderConfirmation />}></Route>
+
         <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
 
         <Route path='/BookMarket/members/:id/update' exact={true} element={<UpdateMember />}></Route>

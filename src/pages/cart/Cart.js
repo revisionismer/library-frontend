@@ -10,6 +10,7 @@ import none from '../../assets/img/none.gif';
 import '../../assets/css/cart/cart.css';
 
 import qs from 'qs';
+import OrderConfirmation from '../order/OrderConfirmation';
 
 const Cart = () => {
 
@@ -125,57 +126,55 @@ const Cart = () => {
                 return false;
             } else {
 
-                checkboxes.forEach((checkbox, index) => {
+                axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
+                    JSON.stringify(obj),
+                    {
+                        headers: {
+                            'Authorization': 'Bearer ' + ACCESS_TOKEN,
+                            'Content-Type': 'application/json; charset=UTF-8'
 
-                    if (Number(obj[index].count) === 0) {
+                        }
+                    }
+                ).then(function (res) {
+                    console.log(res);
+                    // 2025-03-22 : 일단 장비구니에서 주문한 정보를 DB에다가 저장하고 주문 확인 페이지로 이동해야 할거 같음
+                    navigate('/BookMarket/order/orderConfirmation', { state: res.data.data.cartItems });
 
-                        alert("1개 이상 주문해야 합니다. 주문 수량을 확인해주세요.");
+                }).catch(function (res) {
+                    console.log(res);
+
+                    if (res.code === "ERR_NETWORK") {
+                        console.log("서버와의 연결이 되어 있지 않습니다.");
                         return false;
 
-                    } else {
+                    }
 
-                        axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
-                            JSON.stringify(obj),
-                            {
-                                headers: {
-                                    'Authorization': 'Bearer ' + ACCESS_TOKEN,
-                                    'Content-Type': 'application/json; charset=UTF-8'
+                    if (res.response.data.message === '배송 주소가 등록 되어있지 않습니다.') {
+                        alert(res.response.data.message);
+                        navigate("/BookMarket/order/orderCustomerInfo");
 
-                                }
-                            }
-                        ).then(function (res) {
-                            console.log(res);
+                        return false;
+                    }
 
+                    if (res.response.data.message === '주문 수량이 재고 수량보다 더 많습니다.' || res.response.data.message === '재고가 없습니다.') {
+                        alert(res.response.data.message);
+                        return false;
+                    }
 
-                        }).catch(function (res) {
-                            console.log(res);
+                    if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                        // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                        alert(res.response.data.message);
 
-                            if (res.code === "ERR_NETWORK") {
-                                console.log("서버와의 연결이 되어 있지 않습니다.");
-                                return false;
-
-                            }
-
-                            if (res.response.data.message === '주문 수량이 재고 수량보다 더 많습니다.' || res.response.data.message === '재고가 없습니다.') {
-                                alert(res.response.data.message);
-                                return false;
-                            }
-
-                            if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
-                                // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
-                                alert(res.response.data.message);
-
-                                // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
-                                deleteCookie('access_token');
-                                navigate("/signin");
-                                return;
-                            }
-                        })
+                        // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                        deleteCookie('access_token');
+                        navigate("/signin");
+                        return;
                     }
                 })
 
             }
         })
+
     }, [])
 
     useEffect(() => {
