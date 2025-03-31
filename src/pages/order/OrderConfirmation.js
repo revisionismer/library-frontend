@@ -7,8 +7,12 @@ import Base64 from 'base-64';
 
 import none from '../../assets/img/none.gif';
 
+import '../../assets/css/order/orderConfirmation.css';
+
 const OrderConfirmation = () => {
     const navigate = useNavigate();
+
+    const { state } = useLocation();
 
     const { id } = useParams();
 
@@ -49,12 +53,49 @@ const OrderConfirmation = () => {
         document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
+    const [cartItems, setCartItems] = useState([]);
+
+    const [totalPrice, setTotalPrice] = useState(0);
+
     useEffect(() => {
+        // 2025-03-22
 
-        const bookId = id;
+        // 1-1. 장바구니에서 주문한 정보를 불러오기전에 계정에 배송 정보가 등록되어 있는지 확인한다. 없으면 배송 주소 등록 페이지로 redirect
 
-        const getOrderBook = async () => {
-            axios.get(`http://127.0.0.1:8080/api/orders/s/${bookId}/info`,
+        // 1-2. 청구 주소도 해당 계정 정보가 DB에 등록되어 있는지 확인하고 없으면 청구 주소 등록 페이지로 이동한다.
+
+        // 1-3. 장바구니에서 저장한 상품 정보들을 불러온다.
+
+        // 1-4. 주소를 확인하고 청구주소를 확인 한뒤 실제로 주문을 진행한다.
+
+        // 2025-03-23 : 장바구니에 담은 아이템들 주문 정보 확인 페이지에 뿌려주기 성공
+        if (state != null) {
+            setCartItems(state);
+        }
+
+        var totalPrice = 0;
+
+        for (var i = 0; i < state.length; i++) {
+            totalPrice += state[i].price * state[i].count;
+        }
+
+        setTotalPrice(totalPrice);
+
+    }, [])
+
+    const [address, setAddress] = useState({
+        country: "",
+        zipcode: "",
+        addressName: "",
+        detailName: "",
+        userId: null,
+        name: ""
+
+    });
+
+    useEffect(() => {
+        const getAddress = async () => {
+            axios.get(`http://127.0.0.1:8080/api/addresses/s/info`,
                 {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
@@ -62,12 +103,19 @@ const OrderConfirmation = () => {
                     }
                 }
             ).then(function (res) {
-
                 console.log(res);
-
+                setAddress(res.data.data)
 
             }).catch(function (res) {
                 console.log(res);
+
+                // 2025-03-25 : 여기까지 함, 다음에는 주소 등록하는 페이지로 이동 후 주소 등록하기
+                if (res.response.data.message === '등록된 주소가 없습니다.') {
+                    alert("등록된 주소가 없습니다. 주소를 등록해주세요.");
+                    navigate("/BookMarket/order/orderCustomerInfo");
+                    return false;
+                }
+
 
                 if (res.code === "ERR_NETWORK") {
                     alert("서버와의 연결이 되어있지 않습니다.");
@@ -88,7 +136,12 @@ const OrderConfirmation = () => {
             })
         }
 
-        getOrderBook();
+        // 2025-03-27 : 여기까지
+        getAddress();
+    }, [])
+
+    useEffect(() => {
+
 
     }, [])
 
@@ -98,79 +151,81 @@ const OrderConfirmation = () => {
                 <div id='orderInfo'>
                     <div className="p-5 mb-4 bg-body-tertiary rounded-3">
                         <div className="container-fluid py-5">
-                            <h1 className="display-5 fw-bold">주문 하기</h1>
+                            <h1 className="display-5 fw-bold">주문 정보 확인</h1>
                             <p className="col-md-8 fs-4">BookMarket</p>
                         </div>
                     </div>
 
                     <div id='orderInfo_area'>
-                        <input type="hidden" id="itemId" defaultValue="" />
-
-                        <div className="d-flex">
-                            <div className="repImgDiv">
-                                <img className="rounded repImg" src={none} width="300" height="300" />
-                            </div>
-                            <div className="wd50">
-                                <span>판매중</span>
-                                <span >품절</span>
-
-                                <div className="h4">아이템 제목</div>
-                                <hr className="my-4" />
-
-                                <div className="text-right">
-                                    <div className="h4 text-danger text-left">
-                                        <input type="hidden" id="price" name="price" defaultValue="1" />
-                                        <span>100</span>원
+                        <div className="row align-items-md-stretch">
+                            <form action="/BookMarket/order/orderConfirmation" className="form-horizontal" method="post" >
+                                <div className="container col-md-10 py-5" style={{ background: '#fafafe' }}>
+                                    <div className="text-center">
+                                        <h1>영수증</h1>
                                     </div>
-                                    <div className="input-group w-50" style={{ display: 'flex', justifyContent: 'flex-start', width: '50%' }}>
-                                        <div className="input-group-prepend" style={{ width: '40px', marginRight: '10px', paddingTop: '7px' }}>
-                                            <span className="input-group-text">수량</span>
+                                    <div id='receipt' className="row text-left">
+                                        <div>
+                                            <strong>배송 주소</strong><br />
+                                            성명 : {address.name}<br />
+                                            우편번호 : {address.zipcode}<br />
+                                            주소 : {address.addressName}, {address.detailName} ({address.country})<br />
                                         </div>
-                                        <div className="text-right">
-                                            <input type="number" id="count" name="count" className="form-control" defaultValue="1" min="1" />
-                                        </div>
-                                        <div className="text-right">
-                                            <input type="number" id="count" name="count" className="form-control" defaultValue="0" readOnly />
+                                        <div>
+                                            <p>
+                                                <em>배송일: 오늘</em>
+                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                                <hr className="my-10" />
 
-                                <div className="text-right mgt-50">
-                                    <div className="text-right">
-                                        <h5>결제 금액</h5>
-                                        <h3 id="totalPrice" className="font-weight-bold">0</h3>
+                                    <div className="row py-2">
+                                        <table className="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th className="text-center">도서</th>
+                                                    <th className="text-center">수량</th>
+                                                    <th className="text-center">가격</th>
+                                                    <th className="text-center">합계</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {cartItems.map((cartItem, index) => {
+                                                    return (
+                                                        <tr className="col-md-4" key={index}>
+
+                                                            <td className="text-center"><em>{cartItem.itemNm}</em></td>
+
+                                                            <td className="text-center">{cartItem.count}</td>
+                                                            <td className="text-center">
+                                                                <span>{cartItem.price}원</span>
+                                                            </td>
+                                                            <td className="text-center">{cartItem.price * cartItem.count}</td>
+                                                        </tr>
+                                                    )
+                                                })}
+
+                                                <tr>
+                                                    <td> </td>
+                                                    <td> </td>
+                                                    <td className='text-right'>총액: </td>
+
+                                                    <td className="text-center text-danger">
+                                                        <h4><strong>{totalPrice}원</strong></h4>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div className="text-right">
-                                        <h5>입고 예정입니다.</h5>
+
+                                    <div className="container col-md-5 py-3 text-center">
+                                        <Link id='confirmPrev' to="/BookMarket/order/list" className="btn btn-primary" role="button">주문 목록</Link>
                                     </div>
                                 </div>
-
-                                <div className="text-right">
-                                    <button type="button" className="btn btn-secondary btn-lg">장바구니 담기</button>
-                                    <button type="button" className="btn btn-primary btn-lg">주문하기</button>
-                                </div>
-                                <div className="text-right">
-                                    <button type="button" className="btn btn-danger btn-lg">품절</button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className="detail jumbotron jumbotron-fluid mgt-30">
-                            <div className="container">
-                                <h4>상품 상세 설명</h4>
-                                <hr className="my-4" />
-                                <p className="lead">아이템 상세 설명</p>
-                            </div>
-                        </div>
-
-                        <div className="text-center">
-                            <img className="rounded mgb-15" src={none} width="700" />
+                            </form>
                         </div>
                     </div>
-                </div >
-            </div >
+                </div>
+            </div>
         </>
     );
 };

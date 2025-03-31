@@ -1,0 +1,22 @@
+#receipt {
+    height: 50vh;
+    
+    align-items: center;
+    
+}
+
+#receipt #delivery_address {
+    
+}
+
+#receipt #delivery_date {
+
+}
+
+#confirmPrev {
+    margin-right: 2px;
+}
+
+#confirmCancel {
+    margin-left: 2px;
+}
