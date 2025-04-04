@@ -57,6 +57,8 @@ const OrderConfirmation = () => {
 
     const [totalPrice, setTotalPrice] = useState(0);
 
+    const [orderId, setOrderId] = useState(0);
+
     useEffect(() => {
         // 2025-03-22
 
@@ -70,16 +72,19 @@ const OrderConfirmation = () => {
 
         // 2025-03-23 : 장바구니에 담은 아이템들 주문 정보 확인 페이지에 뿌려주기 성공
         if (state != null) {
-            setCartItems(state);
+            setCartItems(state.cartItems);
+            setOrderId(state.orderId);
         }
 
         var totalPrice = 0;
 
-        for (var i = 0; i < state.length; i++) {
-            totalPrice += state[i].price * state[i].count;
+        for (var i = 0; i < state.cartItems.length; i++) {
+            totalPrice += state.cartItems[i].price * state.cartItems[i].count;
         }
 
         setTotalPrice(totalPrice);
+
+        console.log(state);
 
     }, [])
 
@@ -90,7 +95,6 @@ const OrderConfirmation = () => {
         detailName: "",
         userId: null,
         name: ""
-
     });
 
     useEffect(() => {
@@ -138,11 +142,6 @@ const OrderConfirmation = () => {
 
         // 2025-03-27 : 여기까지
         getAddress();
-    }, [])
-
-    useEffect(() => {
-
-
     }, [])
 
     return (
