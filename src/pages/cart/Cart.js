@@ -18,6 +18,8 @@ const Cart = () => {
 
     const { id } = useParams();
 
+    const { IMP } = window;
+
     var ACCESS_TOKEN = getCookie('access_token');
 
     function getCookie(key) {
@@ -56,6 +58,28 @@ const Cart = () => {
     }
 
     const [carts, setCarts] = useState([]);
+
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const [user, setUser] = useState({
+        id: null,
+        username: "",
+        name: "",
+        bio: "",
+        gender: "",
+        website: "",
+        phone: "",
+        profileImageUrl: ""
+    });
+
+    const [address, setAddress] = useState({
+        country: "",
+        zipcode: "",
+        addressName: "",
+        detailName: "",
+        userId: null,
+        name: ""
+    });
 
     useEffect(() => {
         const getCarts = async () => {
@@ -97,10 +121,101 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
+
+        const getUser = async () => {
+            axios.get(`http://127.0.0.1:8080/api/users/s/${userId}/info`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Authorization': 'Bearer ' + ACCESS_TOKEN
+                    }
+                }
+            ).then(function (res) {
+
+                console.log(res);
+                setUser(res.data.data);
+
+            }).catch(function (res) {
+                console.log(res);
+
+                if (res.code === "ERR_NETWORK") {
+                    alert("서버와의 연결이 되어있지 않습니다.");
+                    navigate("/signin");
+                    return false;
+
+                }
+
+                if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                    // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                    alert(res.response.data.message);
+
+                    // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                    deleteCookie('access_token');
+                    navigate("/signin");
+                    return;
+                }
+            })
+        }
+
+        getUser();
+    }, [])
+
+    useEffect(() => {
+        const getAddress = async () => {
+            axios.get(`http://127.0.0.1:8080/api/addresses/s/info`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Authorization': 'Bearer ' + ACCESS_TOKEN
+                    }
+                }
+            ).then(function (res) {
+                console.log(res);
+                setAddress(res.data.data)
+
+            }).catch(function (res) {
+                console.log(res);
+
+                // 2025-03-25 : 여기까지 함, 다음에는 주소 등록하는 페이지로 이동 후 주소 등록하기
+                if (res.response.data.message === '등록된 주소가 없습니다.') {
+                    alert("등록된 주소가 없습니다. 주소를 등록해주세요.");
+                    navigate("/BookMarket/order/orderCustomerInfo");
+                    return false;
+                }
+
+
+                if (res.code === "ERR_NETWORK") {
+                    alert("서버와의 연결이 되어있지 않습니다.");
+                    navigate("/signin");
+                    return false;
+
+                }
+
+                if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                    // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                    alert(res.response.data.message);
+
+                    // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                    deleteCookie('access_token');
+                    navigate("/signin");
+                    return;
+                }
+            })
+        }
+
+        // 2025-03-27 : 여기까지
+        getAddress();
+    }, [])
+
+    useEffect(() => {
+        IMP.init('imp76666016');
+
         document.querySelector('#cartOrderBtn').addEventListener('click', (e) => {
             var checkboxes = document.querySelectorAll('input[name="selectBook"]:checked');
 
             var obj = new Object();
+
+            var totalPrice = 0;
 
             checkboxes.forEach((checkbox, index) => {
                 var tr = checkbox.parentNode.parentNode;
@@ -116,61 +231,93 @@ const Cart = () => {
                     unitsInStock: td[5].textContent
                 }
 
-            })
+                td[4].childNodes[0].addEventListener('oninput', (e) => {
+                    ojb[index].count = td[4].childNodes[0].value;
+                })
 
-            console.log(obj);
+                totalPrice += Number(td[3].textContent) * Number(td[4].childNodes[0].value);
+
+            })
 
             // 장바구니에서 바로 주문하는게 아니라 주문 화면 페이지로 데이터를 들고가서 아래를 실행해야함
             if (checkboxes.length === 0) {
                 alert("상품이 선택되지 않았습니다. 장바구니를 확인해주세요.");
                 return false;
             } else {
-
-                axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
-                    JSON.stringify(obj),
+                // 2025-04-03 : 여기까지
+                IMP.request_pay(
                     {
-                        headers: {
-                            'Authorization': 'Bearer ' + ACCESS_TOKEN,
-                            'Content-Type': 'application/json; charset=UTF-8'
+                        pg: `html5_inicis.INIpayTest`,
+                        pay_method: "card",
+                        merchant_uid: Number.parseInt(`${userId}`),
+                        amount: Number.parseInt(`${totalPrice}`), // 결제금액
+                        name: `주문명`, // 주문명
+                        //    buyer_name: `구매자 이름`
+                        //    buyer_tel: `구매자 전화번호`, 
+                        //    buyer_email: `구매자 이메일(한글이 포함되면 안됨)`, 
+                        //    buyer_addr: `구매자 주소`, 
+                        //    buyer_postcode: `구매자 우편번호` 
+                    },
+                    function (response) {
+                        // 결제 종료 시 호출되는 콜백 함수
+                        // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
+                        // 결제 결과를 처리하는 로직을 작성합니다.
 
+                        console.log(response);
+
+                        if (response.success) {
+                            axios.post(`http://127.0.0.1:8080/api/orders/s/cartItem`,
+                                JSON.stringify(obj),
+                                {
+                                    headers: {
+                                        'Authorization': 'Bearer ' + ACCESS_TOKEN,
+                                        'Content-Type': 'application/json; charset=UTF-8'
+
+                                    }
+                                }
+                            ).then(function (res) {
+                                console.log(res);
+                                // 2025-03-22 : 일단 장비구니에서 주문한 정보를 DB에다가 저장하고 주문 확인 페이지로 이동해야 할거 같음
+                                navigate('/BookMarket/order/orderConfirmation', { state: res.data.data });
+
+                            }).catch(function (res) {
+                                console.log(res);
+
+                                if (res.code === "ERR_NETWORK") {
+                                    console.log("서버와의 연결이 되어 있지 않습니다.");
+                                    return false;
+
+                                }
+
+                                if (res.response.data.message === '배송 주소가 등록 되어있지 않습니다.') {
+                                    alert(res.response.data.message);
+                                    navigate("/BookMarket/order/orderCustomerInfo");
+
+                                    return false;
+                                }
+
+                                if (res.response.data.message === '주문 수량이 재고 수량보다 더 많습니다.' || res.response.data.message === '재고가 없습니다.') {
+                                    alert(res.response.data.message);
+                                    return false;
+                                }
+
+                                if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                                    // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                                    alert(res.response.data.message);
+
+                                    // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                                    deleteCookie('access_token');
+                                    navigate("/signin");
+                                    return;
+                                }
+                            })
+                        } else {
+                            alert(response.error_msg);
+                            return false;
                         }
-                    }
-                ).then(function (res) {
-                    console.log(res);
-                    // 2025-03-22 : 일단 장비구니에서 주문한 정보를 DB에다가 저장하고 주문 확인 페이지로 이동해야 할거 같음
-                    navigate('/BookMarket/order/orderConfirmation', { state: res.data.data.cartItems });
-
-                }).catch(function (res) {
-                    console.log(res);
-
-                    if (res.code === "ERR_NETWORK") {
-                        console.log("서버와의 연결이 되어 있지 않습니다.");
-                        return false;
 
                     }
-
-                    if (res.response.data.message === '배송 주소가 등록 되어있지 않습니다.') {
-                        alert(res.response.data.message);
-                        navigate("/BookMarket/order/orderCustomerInfo");
-
-                        return false;
-                    }
-
-                    if (res.response.data.message === '주문 수량이 재고 수량보다 더 많습니다.' || res.response.data.message === '재고가 없습니다.') {
-                        alert(res.response.data.message);
-                        return false;
-                    }
-
-                    if (res.response.status === 500 || res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
-                        // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
-                        alert(res.response.data.message);
-
-                        // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
-                        deleteCookie('access_token');
-                        navigate("/signin");
-                        return;
-                    }
-                })
+                );
 
             }
         })
@@ -212,7 +359,6 @@ const Cart = () => {
             })
 
             totalOrderPrice.innerHTML = totalPrice;
-
             console.log(checkboxes);
 
         })

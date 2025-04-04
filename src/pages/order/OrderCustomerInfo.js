@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import Base64 from 'base-64';
 
+import '../../assets/css/order/orderCustomerInfo.css';
+
 // 주문하는 고객 ID정보 가져오고(로그인한 회원)
 // 성명(로그인한 회원)
 // 전화번호
