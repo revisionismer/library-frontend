@@ -1,15 +1,15 @@
-#receipt {
+#orderCustomerInfo {
     height: 50vh;
     
     align-items: center;
     
 }
 
-#receipt #delivery_address {
+#orderCustomerInfo #delivery_address {
     
 }
 
-#receipt #delivery_date {
+#orderCustomerInfo #delivery_date {
 
 }
 
@@ -19,4 +19,21 @@
 
 #confirmCancel {
     margin-left: 2px;
+}
+
+#orderInfo_area #pay_method {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    
+}
+
+#orderInfo_area #pay_method label {
+    margin-right: 2px;
+}
+
+#orderInfo_area #pay_method #payConditionArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
