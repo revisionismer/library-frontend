@@ -7,6 +7,8 @@ import Base64 from 'base-64';
 
 import none from '../../assets/img/none.gif';
 
+import '../../assets/css/order/orderFinished.css';
+
 const OrderFinished = () => {
     const navigate = useNavigate();
 
@@ -53,6 +55,18 @@ const OrderFinished = () => {
         document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
+    // 2025-04-19 : 여기까지
+    const [orderId, setOrderId] = useState();
+    const [orderFinishedDtos, setOrderFinishedDtos] = useState([])
+
+    useEffect(() => {
+        setOrderId(state.orderId);
+        setOrderFinishedDtos(state.dtos);
+
+        console.log(orderId);
+        console.log(orderFinishedDtos);
+    }, [])
+
     return (
         <>
             <div className='container'>
@@ -66,8 +80,15 @@ const OrderFinished = () => {
 
                     <div id='orderFinished_area'>
                         <div className="row align-items-md-stretch">
-
+                            <div className="container">
+                                <h2 className="alert alert-danger">주문해 주셔서 감사합니다.</h2>
+                                <p>주문은 2~3일 내에 배송될 예정입니다!	!</p>
+                                <p>주문번호 : {orderId}</p>
+                            </div>
                         </div>
+
+                        <br />
+                        <p><Link to="/BookMarket/books" className="btn btn-primary"> &laquo; 도서목록</Link></p>
                     </div>
                 </div>
             </div>

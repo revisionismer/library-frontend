@@ -20,3 +20,4 @@
 18. 주소 입력 페이지(OrderCustomerInfo.js) 및 주문 확인 페이지(OrderConfirmation.js) 생성 및 api 연동 
 19. 모의 결제(Portone API) API 연동
 20. 결제 완료 화면(OrderFinished.js) 생성 및 api 연동
+21. 주문 목록 페이지(OrderList.js) api 연동
