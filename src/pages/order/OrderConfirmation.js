@@ -85,7 +85,7 @@ const OrderConfirmation = () => {
 
         console.log(state);
 
-    }, [])
+    }, []);
 
     const [address, setAddress] = useState({
         country: "",
