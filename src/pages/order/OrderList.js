@@ -88,6 +88,12 @@ const OrderList = () => {
 
                 }
 
+                if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
+                    alert(res.response.data.message);
+                    navigate("/BookMarket/order/orderCustomerInfo");
+                    return;
+                }
+                
                 if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
                     // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
                     alert(res.response.data.message);
