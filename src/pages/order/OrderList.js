@@ -48,6 +48,11 @@ const OrderList = () => {
     }
 
     const [orders, setOrders] = useState([]);
+    const [isFirst, setIsFirst] = useState();
+    const [isNext, setIsNext] = useState();
+    const [isPrev, setIsPrev] = useState();
+
+    const [pageNumbers, setPageNumbers] = useState([]);
 
     const [orderCnt, setOrderCnt] = useState();
 
@@ -68,6 +73,10 @@ const OrderList = () => {
                 // 2025-04-22 : 여기까지 완료
                 setOrders(res.data.data.orderList);
                 setOrderCnt(res.data.data.orderCnt);
+                setPageNumbers(res.data.data.pageNumbers);
+                setIsFirst(res.data.data.isFirst);
+                setIsNext(res.data.data.isNext);
+                setIsPrev(res.data.data.IsPrev);
 
             }).catch(function (res) {
                 console.log(res);
@@ -125,6 +134,7 @@ const OrderList = () => {
                                 <table className="table table-hover text-center">
                                     <thead>
                                         <tr>
+                                            <th>/</th>
                                             <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
                                             <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문아이템 ID</Link></th>
                                             <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=customer_id&sortDir=' + reverseSortDir}`}>고객 ID</Link></th>
@@ -144,28 +154,70 @@ const OrderList = () => {
                                             orders.map((order, index) => {
                                                 return (
                                                     <tr key={index}>
+                                                        <td><img src={`/bookImg/${order.thumnailImageUrl}`} alt="image" style={{ width: '50px', height: '50px' }} /></td>
                                                         <td>{order.orderId}</td>
                                                         <td>{order.orderItemId}</td>
                                                         <td>{order.customerId}</td>
                                                         <td>{order.deliveryAddress}</td>
                                                         <td>{order.totalOrderPrice}원</td>
-                                                        <td id='orderListBtn' style={{ display: 'flex', justifyContent: 'center' }}>
-                                                            <Link to={`/order/view/${order.orderId}`}><span className="badge text-bg-secondary">상세보기</span></Link>
-                                                            <Link to={`/order/edit/${order.orderId}`}><span className="badge text-bg-warning">수정</span></Link>
-                                                            <Link to={`/order/delete/${order.orderId}`}><span className="badge text-bg-danger">삭제</span></Link>
+                                                        <td id='orderListBtn' style={{ display: 'flex', justifyContent: 'center', height: '61px' }}>
+                                                            <Link to={`/BookMarket/order/view/${order.orderId}`}><span className="badge text-bg-secondary">상세보기</span></Link>
+                                                            <Link to={`/BookMarket/order/edit/${order.orderId}`}><span className="badge text-bg-warning">수정</span></Link>
+                                                            <Link to={`/BookMarket/order/delete/${order.orderId}`}><span className="badge text-bg-danger">삭제</span></Link>
                                                         </td>
                                                     </tr>
                                                 )
                                             })
                                         }
-
-
-
-
                                     </tbody>
                                 </table>
-                            </div>
+                                <div id='pagination'>
+                                    {orderCnt === 0 ?
+                                        <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
+                                            <Link className="my_atag_none my_mr_sm_1" id="main_prev">
+                                                <i className="fa-solid fa-angle-left"></i>
+                                            </Link>
 
+                                            <Link className="my_atag_none_1">
+                                                <div className="my_paging_number_box my_mr_sm_1_1">
+                                                    1
+                                                </div>
+                                            </Link>
+
+                                            <Link className="my_atag_none my_ml_sm_1">
+                                                <i className="fa-solid fa-angle-right"></i>
+                                            </Link>
+                                        </div>
+                                        :
+                                        <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
+                                            {isPrev ?
+                                                <Link className="my_atag_none my_mr_sm_1" id="main_prev">
+                                                    <i className="fa-solid fa-angle-left"></i>
+                                                </Link>
+                                                :
+                                                ''
+                                            }
+                                            {/**2025-04-27 : 여기까지 */}
+                                            <div style={{ display: 'flex' }} id='pageNumbers' className="my_paging_number_box my_mr_sm_1_1">
+                                                {pageNumbers.map((value, index) =>
+                                                    <div key={index}>
+                                                        {/** 페이징 api는 동작, 아래를 function으로 바꿔줘야한다. */}
+                                                        <Link to={`/BookMarket/order/list?page=${value - 1}`}>{value}</Link>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {isNext ?
+                                                <Link className="my_atag_none my_ml_sm_1" id="main_next">
+                                                    <i className="fa-solid fa-angle-right"></i>
+                                                </Link>
+                                                :
+                                                ''
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
                         </div>
 
