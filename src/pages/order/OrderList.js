@@ -219,9 +219,13 @@ const OrderList = () => {
 
                             <div style={{ paddingTop: "50px" }}>
                                 <div className="text-end" style={{ paddingRight: '30px' }}>전체 주문수: {orderCnt}</div>
-
-                                <table className="table table-hover text-center">
-                                    <thead>
+                                {orderCnt === 0 ?
+                                    <div id='isOrders'>
+                                        <p>주문 내역이 존재하지 않습니다</p>
+                                    </div>
+                                    :
+                                    <table className="table table-hover text-center">
+                                        <thead>
                                         <tr>
                                             <th>/</th>
                                             <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
@@ -231,16 +235,9 @@ const OrderList = () => {
                                             <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=grandTotal&sortDir=' + reverseSortDir}`}>총액</Link></th>
                                             <th>비고</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {orders == 0 ?
-                                            <tr id='isBookText'>
-                                                <td>등록된 책이 없습니다.</td>
-                                            </tr>
-
-                                            :
-
-                                            orders.map((order, index) => {
+                                        </thead>
+                                        <tbody>
+                                            {orders.map((order, index) => {
                                                 return (
                                                     <tr key={index}>
                                                         <td><img src={`/bookImg/${order.thumnailImageUrl}`} alt="image" style={{ width: '50px', height: '50px' }} /></td>
@@ -255,28 +252,15 @@ const OrderList = () => {
                                                             <Link to={`/BookMarket/order/delete/${order.orderId}`}><span className="badge text-bg-danger">삭제</span></Link>
                                                         </td>
                                                     </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                }
+                                
                                 <div id='pagination'>
                                     {orderCnt === 0 ?
-                                        <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
-                                            <Link className="my_atag_none my_mr_sm_1" id="main_prev">
-                                                <i className="fa-solid fa-angle-left"></i>
-                                            </Link>
-
-                                            <Link className="my_atag_none_1">
-                                                <div className="my_paging_number_box my_mr_sm_1_1">
-                                                    1
-                                                </div>
-                                            </Link>
-
-                                            <Link className="my_atag_none my_ml_sm_1">
-                                                <i className="fa-solid fa-angle-right"></i>
-                                            </Link>
-                                        </div>
+                                        ''
                                         :
                                         <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
                                             {isPrev ?

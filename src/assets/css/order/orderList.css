@@ -29,5 +29,16 @@
     
     display: flex;
     justify-content: space-between;
-    
+}
+
+#orderList #orderList_area #isOrders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+#orderList #orderList_area #isOrders p {
+    font-weight: bold;
+    font-size: 15px;
 }
