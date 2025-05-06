@@ -6,6 +6,8 @@ import axios from 'axios';
 import Base64 from 'base-64';
 import '../../assets/css/order/orderList.css';
 
+import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
+
 const OrderList = () => {
 
     const navigate = useNavigate();
@@ -93,7 +95,7 @@ const OrderList = () => {
                     navigate("/BookMarket/order/orderCustomerInfo");
                     return;
                 }
-                
+
                 if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
                     // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
                     alert(res.response.data.message);
@@ -109,6 +111,87 @@ const OrderList = () => {
         getOrders();
 
     }, []);
+
+    function movePrev() {
+        console.log("이전 버튼 클릭");
+
+        console.log(params);
+
+    }
+
+    function moveNext() {
+        console.log("다음 버튼 클릭");
+    }
+
+    useEffect(() => {
+
+        // 2025-05-03
+        const pagination = document.querySelector("#pagination");
+
+        pagination.addEventListener('click', (e) => {
+
+            // 2025-05-04 : 페이징 처리 중
+            var currentPage;
+
+            if (Number(e.target.innerHTML)) {
+                currentPage = e.target.innerHTML;
+            }
+
+            console.log(currentPage);
+
+            const getOrders = async () => {
+                axios.get(`http://127.0.0.1:8080/api/orders/s?page=${currentPage - 1}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json; charset=UTF-8',
+                            'Authorization': 'Bearer ' + ACCESS_TOKEN
+                        }
+                    }
+                ).then(function (res) {
+
+                    console.log(res);
+
+                    // 2025-04-22 : 여기까지 완료
+                    setOrders(res.data.data.orderList);
+                    setOrderCnt(res.data.data.orderCnt);
+                    setPageNumbers(res.data.data.pageNumbers);
+                    setIsFirst(res.data.data.isFirst);
+                    setIsNext(res.data.data.isNext);
+                    setIsPrev(res.data.data.IsPrev);
+
+                }).catch(function (res) {
+                    console.log(res);
+
+                    if (res.code === "ERR_NETWORK") {
+                        alert("서버와의 연결이 되어있지 않습니다.");
+                        navigate("/signin");
+                        return false;
+
+                    }
+
+                    if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
+                        alert(res.response.data.message);
+                        navigate("/BookMarket/order/orderCustomerInfo");
+                        return;
+                    }
+
+                    if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                        // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                        alert(res.response.data.message);
+
+                        // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                        deleteCookie('access_token');
+                        navigate("/signin");
+                        return;
+                    }
+                })
+            }
+
+            getOrders();
+
+        })
+    }, [])
+
 
     return (
         <>
@@ -197,16 +280,16 @@ const OrderList = () => {
                                         :
                                         <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
                                             {isPrev ?
-                                                <Link className="my_atag_none my_mr_sm_1" id="main_prev">
-                                                    <i className="fa-solid fa-angle-left"></i>
-                                                </Link>
+                                                <div className="my_atag_none my_mr_sm_1" id='prev' onClick={() => movePrev()}>
+                                                    <CaretLeftFill></CaretLeftFill>
+                                                </div>
                                                 :
                                                 ''
                                             }
                                             {/**2025-04-27 : 여기까지 */}
                                             <div style={{ display: 'flex' }} id='pageNumbers' className="my_paging_number_box my_mr_sm_1_1">
                                                 {pageNumbers.map((value, index) =>
-                                                    <div key={index}>
+                                                    <div id='pageNumber' key={index}>
                                                         {/** 페이징 api는 동작, 아래를 function으로 바꿔줘야한다. */}
                                                         <Link to={`/BookMarket/order/list?page=${value - 1}`}>{value}</Link>
                                                     </div>
@@ -214,9 +297,9 @@ const OrderList = () => {
                                             </div>
 
                                             {isNext ?
-                                                <Link className="my_atag_none my_ml_sm_1" id="main_next">
-                                                    <i className="fa-solid fa-angle-right"></i>
-                                                </Link>
+                                                <div className="my_atag_none my_ml_sm_1" id='next' onClick={() => moveNext()}>
+                                                    <CaretRightFill></CaretRightFill>
+                                                </div>
                                                 :
                                                 ''
                                             }
