@@ -78,7 +78,7 @@ const OrderList = () => {
                 setPageNumbers(res.data.data.pageNumbers);
                 setIsFirst(res.data.data.isFirst);
                 setIsNext(res.data.data.isNext);
-                setIsPrev(res.data.data.IsPrev);
+                setIsPrev(res.data.data.isPrev);
 
             }).catch(function (res) {
                 console.log(res);
@@ -115,8 +115,6 @@ const OrderList = () => {
     function movePrev() {
         console.log("이전 버튼 클릭");
 
-        console.log(params);
-
     }
 
     function moveNext() {
@@ -135,63 +133,63 @@ const OrderList = () => {
 
             if (Number(e.target.innerHTML)) {
                 currentPage = e.target.innerHTML;
-            }
 
-            console.log(currentPage);
+                console.log(currentPage);
 
-            const getOrders = async () => {
-                axios.get(`http://127.0.0.1:8080/api/orders/s?page=${currentPage - 1}`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json; charset=UTF-8',
-                            'Authorization': 'Bearer ' + ACCESS_TOKEN
+                const getOrders = async () => {
+                    axios.get(`http://127.0.0.1:8080/api/orders/s?page=${currentPage - 1}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json; charset=UTF-8',
+                                'Authorization': 'Bearer ' + ACCESS_TOKEN
+                            }
                         }
-                    }
-                ).then(function (res) {
+                    ).then(function (res) {
 
-                    console.log(res);
+                        console.log(res);
 
-                    // 2025-04-22 : 여기까지 완료
-                    setOrders(res.data.data.orderList);
-                    setOrderCnt(res.data.data.orderCnt);
-                    setPageNumbers(res.data.data.pageNumbers);
-                    setIsFirst(res.data.data.isFirst);
-                    setIsNext(res.data.data.isNext);
-                    setIsPrev(res.data.data.IsPrev);
+                        // 2025-04-22 : 여기까지 완료
+                        setOrders(res.data.data.orderList);
+                        setOrderCnt(res.data.data.orderCnt);
+                        setPageNumbers(res.data.data.pageNumbers);
+                        setIsFirst(res.data.data.isFirst);
+                        setIsNext(res.data.data.isNext);
+                        setIsPrev(res.data.data.isPrev);
 
-                }).catch(function (res) {
-                    console.log(res);
+                    }).catch(function (res) {
+                        console.log(res);
 
-                    if (res.code === "ERR_NETWORK") {
-                        alert("서버와의 연결이 되어있지 않습니다.");
-                        navigate("/signin");
-                        return false;
+                        if (res.code === "ERR_NETWORK") {
+                            alert("서버와의 연결이 되어있지 않습니다.");
+                            navigate("/signin");
+                            return false;
 
-                    }
+                        }
 
-                    if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
-                        alert(res.response.data.message);
-                        navigate("/BookMarket/order/orderCustomerInfo");
-                        return;
-                    }
+                        if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
+                            alert(res.response.data.message);
+                            navigate("/BookMarket/order/orderCustomerInfo");
+                            return;
+                        }
 
-                    if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
-                        // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
-                        alert(res.response.data.message);
+                        if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                            // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                            alert(res.response.data.message);
 
-                        // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
-                        deleteCookie('access_token');
-                        navigate("/signin");
-                        return;
-                    }
-                })
+                            // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                            deleteCookie('access_token');
+                            navigate("/signin");
+                            return;
+                        }
+                    })
+                }
+
+                getOrders();
+
             }
-
-            getOrders();
 
         })
     }, [])
-
 
     return (
         <>
@@ -226,15 +224,15 @@ const OrderList = () => {
                                     :
                                     <table className="table table-hover text-center">
                                         <thead>
-                                        <tr>
-                                            <th>/</th>
-                                            <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
-                                            <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문아이템 ID</Link></th>
-                                            <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=customer_id&sortDir=' + reverseSortDir}`}>고객 ID</Link></th>
-                                            <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=shipping_id&sortDir=' + reverseSortDir}`}>베송지</Link></th>
-                                            <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=grandTotal&sortDir=' + reverseSortDir}`}>총액</Link></th>
-                                            <th>비고</th>
-                                        </tr>
+                                            <tr>
+                                                <th>/</th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문아이템 ID</Link></th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=customer_id&sortDir=' + reverseSortDir}`}>고객 ID</Link></th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=shipping_id&sortDir=' + reverseSortDir}`}>베송지</Link></th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=grandTotal&sortDir=' + reverseSortDir}`}>총액</Link></th>
+                                                <th>비고</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             {orders.map((order, index) => {
@@ -257,7 +255,7 @@ const OrderList = () => {
                                         </tbody>
                                     </table>
                                 }
-                                
+
                                 <div id='pagination'>
                                     {orderCnt === 0 ?
                                         ''
