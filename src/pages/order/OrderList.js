@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, json, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, json, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import axios from 'axios';
 
 import Base64 from 'base-64';
 import '../../assets/css/order/orderList.css';
 
-import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
+import { CaretLeftFill, CaretRightFill, CurrencyEuro } from 'react-bootstrap-icons';
 
 const OrderList = () => {
 
     const navigate = useNavigate();
 
     const { id } = useParams();
+
+    const location = useLocation();
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     var ACCESS_TOKEN = getCookie('access_token');
 
@@ -58,6 +62,14 @@ const OrderList = () => {
 
     const [orderCnt, setOrderCnt] = useState();
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [prevPage, setPrevPage] = useState();
+    const [nextPage, setNextPage] = useState();
+
+    const [prev, setPrev] = useState();
+    const [next, setNext] = useState();
+
     useEffect(() => {
 
         const getOrders = async () => {
@@ -79,6 +91,10 @@ const OrderList = () => {
                 setIsFirst(res.data.data.isFirst);
                 setIsNext(res.data.data.isNext);
                 setIsPrev(res.data.data.isPrev);
+
+                setCurrentPage(0);
+                setPrev(res.data.data.prev);
+                setNext(res.data.data.next);
 
             }).catch(function (res) {
                 console.log(res);
@@ -112,32 +128,101 @@ const OrderList = () => {
 
     }, []);
 
-    function movePrev() {
-        console.log("이전 버튼 클릭");
-
-    }
-
-    function moveNext() {
-        console.log("다음 버튼 클릭");
-    }
-
     useEffect(() => {
 
-        // 2025-05-03
+        // 2025-05-12
         const pagination = document.querySelector("#pagination");
 
         pagination.addEventListener('click', (e) => {
 
-            // 2025-05-04 : 페이징 처리 중
-            var currentPage;
+            // 2025-05-12 : 페이징 처리 중
+            var page = 1;
 
             if (Number(e.target.innerHTML)) {
-                currentPage = e.target.innerHTML;
 
-                console.log(currentPage);
+                page = Number(e.target.innerHTML);
+            }
+
+            const getOrders = async () => {
+                axios.get(`http://127.0.0.1:8080/api/orders/s?page=${page - 1}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json; charset=UTF-8',
+                            'Authorization': 'Bearer ' + ACCESS_TOKEN
+                        }
+                    }
+                ).then(function (res) {
+
+                    console.log(res);
+
+                    // 2025-04-22 : 여기까지 완료
+                    setOrders(res.data.data.orderList);
+                    setOrderCnt(res.data.data.orderCnt);
+                    setPageNumbers(res.data.data.pageNumbers);
+                    setIsFirst(res.data.data.isFirst);
+                    setIsNext(res.data.data.isNext);
+                    setIsPrev(res.data.data.isPrev);
+                    setPrev(res.data.data.prev);
+                    setNext(res.data.data.next);
+
+                }).catch(function (res) {
+                    console.log(res);
+
+                    if (res.code === "ERR_NETWORK") {
+                        alert("서버와의 연결이 되어있지 않습니다.");
+                        navigate("/signin");
+                        return false;
+
+                    }
+
+                    if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
+                        alert(res.response.data.message);
+                        navigate("/BookMarket/order/orderCustomerInfo");
+                        return;
+                    }
+
+                    if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                        // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                        alert(res.response.data.message);
+
+                        // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                        deleteCookie('access_token');
+                        navigate("/signin");
+                        return;
+                    }
+                })
+            }
+
+            getOrders();
+        })
+    }, [])
+
+    // 2025-05-09 : 페이징 이전, 다음 페이지 처리중
+
+    useEffect(() => {
+
+        const pagination = document.querySelector("#pagination");
+
+        pagination.addEventListener('click', (e) => {
+
+            console.log("현재 페이지 : ", currentPage);
+
+            // 2025-05-13 : 페이징 처리는 되는데 클릭 이벤트가 중복으로 발생하기도 해서 나중에 다시 손봐야한다.
+            if (e.target.id === 'prev') {
+                console.log("이전 버튼 클릭");
+
+                const params = new URLSearchParams(window.location.search);
+
+                console.log(params.get('page'));
+
+                const prevPage = Number(params.get('page')) - 1;
+
+                setPrevPage(prevPage);
+
+                console.log(prevPage);
 
                 const getOrders = async () => {
-                    axios.get(`http://127.0.0.1:8080/api/orders/s?page=${currentPage - 1}`,
+                    axios.get(`http://127.0.0.1:8080/api/orders/s?page=${prevPage - 1}`,
                         {
                             headers: {
                                 'Content-Type': 'application/json; charset=UTF-8',
@@ -155,6 +240,8 @@ const OrderList = () => {
                         setIsFirst(res.data.data.isFirst);
                         setIsNext(res.data.data.isNext);
                         setIsPrev(res.data.data.isPrev);
+                        setPrev(res.data.data.prev);
+                        setNext(res.data.data.next);
 
                     }).catch(function (res) {
                         console.log(res);
@@ -188,7 +275,71 @@ const OrderList = () => {
 
             }
 
+            if (e.target.id === 'next') {
+                console.log("다음 버튼 클릭");
+
+                const params = new URLSearchParams(window.location.search);
+
+                console.log(params.get('page'));
+
+                const nextPage = Number(params.get('page')) + 1;
+
+                setNextPage(nextPage);
+
+                const getOrders = async () => {
+                    axios.get(`http://127.0.0.1:8080/api/orders/s?page=${nextPage - 1}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json; charset=UTF-8',
+                                'Authorization': 'Bearer ' + ACCESS_TOKEN
+                            }
+                        }
+                    ).then(function (res) {
+
+                        console.log(res);
+
+                        // 2025-04-22 : 여기까지 완료
+                        setOrders(res.data.data.orderList);
+                        setOrderCnt(res.data.data.orderCnt);
+                        setPageNumbers(res.data.data.pageNumbers);
+                        setIsFirst(res.data.data.isFirst);
+                        setIsNext(res.data.data.isNext);
+                        setIsPrev(res.data.data.isPrev);
+                        setPrev(res.data.data.prev);
+                        setNext(res.data.data.next);
+
+                    }).catch(function (res) {
+                        console.log(res);
+
+                        if (res.code === "ERR_NETWORK") {
+                            alert("서버와의 연결이 되어있지 않습니다.");
+                            navigate("/signin");
+                            return false;
+
+                        }
+
+                        if (res.response.data.message === "배송 주소가 등록 되어있지 않습니다.") {
+                            alert(res.response.data.message);
+                            navigate("/BookMarket/order/orderCustomerInfo");
+                            return;
+                        }
+
+                        if (res.response.status === 400 || res.response.status === 401 || res.response.status === 403) {
+                            // 2024-03-28 : alert가 두번씩 호출됨 고민해봐야함 : index.js에서 문제됨
+                            alert(res.response.data.message);
+
+                            // 2024-04-12 : 무슨 이유인지 GET 방식에서는 403일때 서버에서 쿠키 삭제가 안되어 클라이언트 단에서 직접 삭제
+                            deleteCookie('access_token');
+                            navigate("/signin");
+                            return;
+                        }
+                    })
+                }
+
+                getOrders();
+            }
         })
+
     }, [])
 
     return (
@@ -262,8 +413,8 @@ const OrderList = () => {
                                         :
                                         <div className="my_paging d-flex justify-content-center align-items-center my_mb_lg_1">
                                             {isPrev ?
-                                                <div className="my_atag_none my_mr_sm_1" id='prev' onClick={() => movePrev()}>
-                                                    <CaretLeftFill></CaretLeftFill>
+                                                <div className="my_atag_none my_mr_sm_1">
+                                                    <Link id='prev' to={`/BookMarket/order/list?page=${prevPage}`}><CaretLeftFill style={{ pointerEvents: 'none' }}></CaretLeftFill></Link>
                                                 </div>
                                                 :
                                                 ''
@@ -273,14 +424,15 @@ const OrderList = () => {
                                                 {pageNumbers.map((value, index) =>
                                                     <div id='pageNumber' key={index}>
                                                         {/** 페이징 api는 동작, 아래를 function으로 바꿔줘야한다. */}
-                                                        <Link to={`/BookMarket/order/list?page=${value - 1}`}>{value}</Link>
+                                                        <Link to={`/BookMarket/order/list?page=${value}`} onClick={() => setCurrentPage(value)}>{value}</Link>
                                                     </div>
                                                 )}
                                             </div>
 
                                             {isNext ?
-                                                <div className="my_atag_none my_ml_sm_1" id='next' onClick={() => moveNext()}>
-                                                    <CaretRightFill></CaretRightFill>
+                                                <div className="my_atag_none my_ml_sm_1" >
+                                                    <Link id='next' to={`/BookMarket/order/list?page=${nextPage}`}><CaretRightFill style={{ pointerEvents: 'none' }}></CaretRightFill></Link>
+
                                                 </div>
                                                 :
                                                 ''
