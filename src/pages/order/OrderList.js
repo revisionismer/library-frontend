@@ -396,9 +396,9 @@ const OrderList = () => {
                                                         <td>{order.deliveryAddress}</td>
                                                         <td>{order.totalOrderPrice}원</td>
                                                         <td id='orderListBtn' style={{ display: 'flex', justifyContent: 'center', height: '61px' }}>
-                                                            <Link to={`/BookMarket/order/view/${order.orderId}`}><span className="badge text-bg-secondary">상세보기</span></Link>
-                                                            <Link to={`/BookMarket/order/edit/${order.orderId}`}><span className="badge text-bg-warning">수정</span></Link>
-                                                            <Link to={`/BookMarket/order/delete/${order.orderId}`}><span className="badge text-bg-danger">삭제</span></Link>
+                                                            <Link to={`/BookMarket/order/view`} state={{ orderId: order.orderId }}><span className="badge text-bg-secondary">상세보기</span></Link>
+                                                            <Link to={`/BookMarket/order/edit`} state={{ orderId: order.orderId }}><span className="badge text-bg-warning">수정</span></Link>
+                                                            <Link to={`/BookMarket/order/delete`} state={{ orderId: order.orderId }}><span className="badge text-bg-danger">삭제</span></Link>
                                                         </td>
                                                     </tr>
                                                 );
