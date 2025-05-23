@@ -14,6 +14,8 @@ import DetailBook from "./pages/book/DetailBook";
 import OrderConfirmation from "./pages/order/OrderConfirmation";
 import OrderCustomerInfo from "./pages/order/OrderCustomerInfo";
 import OrderFinished from "./pages/order/OrderFinished";
+import OrderEdit from "./pages/order/OrderEdit";
+import OrderView from "./pages/order/OrderView";
 
 function App() {
 
@@ -58,6 +60,9 @@ function App() {
 
         <Route path='/BookMarket/order/orderConfirmation' exact={true} element={<OrderConfirmation />}></Route>
         <Route path='/BookMarket/order/orderFinished' exact={true} element={<OrderFinished />}></Route>
+
+        <Route path='/BookMarket/order/view' exact={true} element={<OrderView />}></Route>
+        <Route path='/BookMarket/order/edit' exact={true} element={<OrderEdit />}></Route>
 
         <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
 

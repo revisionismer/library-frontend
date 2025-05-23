@@ -22,3 +22,4 @@
 20. 결제 완료 화면(OrderFinished.js) 생성 및 api 연동
 21. 주문 목록 페이지(OrderList.js) api 연동
 22. 주문 목록 페이지(OrderList.js) 페이징 처리 완료(추후 중복 클릭 이벤트 처리 해줘야한다)
+23. orderEdit.js, orderView.js 페이지 생성 및 초기 설정
