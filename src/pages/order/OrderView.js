@@ -42,6 +42,7 @@ const OrderView = () => {
         payload = ACCESS_TOKEN.substring(ACCESS_TOKEN.indexOf('.') + 1, ACCESS_TOKEN.lastIndexOf('.'));
         loginUser = JSON.parse(Base64.decode(payload));
         userId = loginUser.id;
+
     }
 
     function deleteCookie(key) {
@@ -52,7 +53,9 @@ const OrderView = () => {
 
         var orderId = state.orderId;
 
-        console.log(orderId);
+        var page = state.page;
+
+        console.log(orderId + ", " + page);
 
         const getOrder = async () => {
             axios.get(`http://127.0.0.1:8080/api/orders/s/${orderId}/info`,
@@ -112,7 +115,10 @@ const OrderView = () => {
                         </div>
 
                         <br />
-                        <p><Link to="/BookMarket/books" className="btn btn-primary"> &laquo; 도서목록</Link></p>
+                        <p>
+                            <Link to="/BookMarket/books" className="btn btn-primary"> &laquo; 도서목록</Link>
+                            <Link to={`/BookMarket/order/list?page=${state.page == 0 ? 1 : state.page}`} className="btn btn-warning"> &laquo; 뒤로가기</Link>
+                        </p>
                     </div>
                 </div>
             </div>
