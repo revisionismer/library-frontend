@@ -24,3 +24,4 @@
 22. 주문 목록 페이지(OrderList.js) 페이징 처리 완료(추후 중복 클릭 이벤트 처리 해줘야한다)
 23. orderEdit.js, orderView.js 페이지 생성 및 초기 설정
 24. orderView.js 페이지 api 연동(미완성)
+25. orderList.js 이전 페이지 정보로 뒤로가기 수정
