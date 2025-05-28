@@ -25,3 +25,4 @@
 23. orderEdit.js, orderView.js 페이지 생성 및 초기 설정
 24. orderView.js 페이지 api 연동(미완성)
 25. orderList.js 이전 페이지 정보로 뒤로가기 수정
+26. orderView.js 페이지 api 연동(완성)

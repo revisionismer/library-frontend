@@ -49,6 +49,9 @@ const OrderView = () => {
         document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
+    const [orderItems, setOrderItems] = useState([]);
+    const [orderCnt, setOrderCnt] = useState();
+
     useEffect(() => {
 
         var orderId = state.orderId;
@@ -66,9 +69,11 @@ const OrderView = () => {
                     }
                 }
             ).then(function (res) {
-
+                
                 console.log(res);
 
+                setOrderItems(res.data.data.orderItems);
+                setOrderCnt(res.data.data.orderCnt);
 
             }).catch(function (res) {
                 console.log(res);
@@ -111,6 +116,61 @@ const OrderView = () => {
                             <div className="container">
 
                                 <p>주문번호 : {state.orderId}</p>
+
+                                {orderCnt === 0 ? 
+                                <div className="row text-left">
+                                    <div className="col-md-6 py-3">
+                                        <p>주문 내역이 존재하지 않습니다.</p>
+                                    </div>
+                                </div>  
+                                : 
+                                
+                                <div className="row text-left">
+                                    {orderItems.map((order, index) => 
+                                    <div className="row py-2" key={index}>
+                                        <input type='hidden' id='orderId' name='orderId' value={order.orderId}/>
+                                        <input type='hidden' id='orderItemId' name='orderItemId' value={order.orderItemId}/>
+                                        <input type='hidden' id='unitsInStock' name='unitsInStock' value={order.unitsInStock}/>
+
+                                        <table className="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th className="text-center">도서</th>
+                                                <th className="text-center">수량</th>
+                                                <th className="text-center">가격</th>
+                                                <th className="text-center">소계</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                   
+                                        <tr>                                 	     
+                                            <td className="text-center">  
+                                                <em>{order.itemNm}</em>
+                                            </td>
+                                        
+                                            <td className="text-center" style={{textAlign:'center'}}>{order.count}</td>              	
+                                            <td className="text-center">
+                                               <span>{order.price}</span> 
+                                            </td>              
+                                         
+                                            <td className="text-center">{order.totalOrderPrice}원</td>
+                                        </tr>
+                                              
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td className="text-right"><h5> <strong>총액:</strong></h5></td>
+                                            <td className="text-center text-danger"><h4><strong>{order.totalOrderPrice}원</strong></h4></td>
+                                        </tr>  
+                                      </tbody>           
+                                     </table>
+                                   </div>   
+                          
+                                    )}
+                                </div>  
+                                }
+                               
+                                
                             </div>
                         </div>
 
