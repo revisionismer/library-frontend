@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #bookList {
-    height: 190vh;
+    height: 100%;
 }
 
 #bookList a {
@@ -15,7 +15,7 @@
 #bookList_area {
     border : 1px solid #ddd;
     padding: 10px 10px; 
-    height: 160vh;  
+      
     
 }
 

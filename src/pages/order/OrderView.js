@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import Base64 from 'base-64';
 
+import '../../assets/css/order/orderView.css';
+
 const OrderView = () => {
 
     const navigate = useNavigate();
