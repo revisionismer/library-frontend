@@ -386,7 +386,7 @@ const OrderList = () => {
                                     <table className="table table-hover text-center">
                                         <thead>
                                             <tr>
-                                                <th>/</th>
+                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문아이템 ID</Link></th>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=customer_id&sortDir=' + reverseSortDir}`}>고객 ID</Link></th>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=shipping_id&sortDir=' + reverseSortDir}`}>베송지</Link></th>
@@ -398,7 +398,7 @@ const OrderList = () => {
                                             {orders.map((order, index) => {
                                                 return (
                                                     <tr key={index}>
-                                                        <td><img src={`/bookImg/${order.thumnailImageUrl}`} alt="image" style={{ width: '50px', height: '50px' }} /></td>
+                                                        <td>{order.orderId}</td>
                                                         <td>{order.orderItemId}</td>
                                                         <td>{order.customerId}</td>
                                                         <td>{order.deliveryAddress}</td>
