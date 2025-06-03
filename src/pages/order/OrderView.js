@@ -56,6 +56,8 @@ const OrderView = () => {
 
     const [totalOrderPrice, setTotalOrderPrice] = useState(0);
 
+    const [delivery, setDelivery] = useState([]);
+
     useEffect(() => {
 
         var orderId = state.orderId;
@@ -79,6 +81,7 @@ const OrderView = () => {
                 setOrderItems(res.data.data.orderItems);
                 setOrderCnt(res.data.data.orderCnt);
                 setTotalOrderPrice(res.data.data.totalOrderPrice);
+                setDelivery(res.data.data.deliveryInfoDto);
 
             }).catch(function (res) {
                 console.log(res);
@@ -111,7 +114,7 @@ const OrderView = () => {
                 <div id='orderView'>
                     <div className="p-5 mb-4 bg-body-tertiary rounded-3">
                         <div className="container-fluid py-5">
-                            <h1 className="display-5 fw-bold">주문 정보 보기</h1>
+                            <h1 className="display-5 fw-bold">주문 정보</h1>
                             <p className="col-md-8 fs-4">BookMarket</p>
                         </div>
                     </div>
@@ -122,6 +125,15 @@ const OrderView = () => {
 
                                 <p>주문번호 : {state.orderId}</p>
 
+                                <div className="row text-left">
+                                    <div className="col-md-6 py-3">
+                                        <strong>배송 주소</strong><br/> 
+
+                                        성명 : {delivery.recipient}<br/>
+                                        주소 : {delivery.destination} <br/>
+                                        <p><em>{delivery.deliveryDate == null ? '배송 준비중' : `배송중(${delivery.deliveryDate} 발송)`}</em></p>
+                                    </div>
+                                </div>
 
                                 {orderCnt === 0 ?
                                     <div className="row text-left">
