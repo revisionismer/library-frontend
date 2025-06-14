@@ -387,10 +387,8 @@ const OrderList = () => {
                                         <thead>
                                             <tr>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문 ID</Link></th>
-                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=orderId&sortDir=' + reverseSortDir}`}>주문아이템 ID</Link></th>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=customer_id&sortDir=' + reverseSortDir}`}>고객 ID</Link></th>
                                                 <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=shipping_id&sortDir=' + reverseSortDir}`}>베송지</Link></th>
-                                                <th><Link to={`@{'/order/page?pageNum=' + 1 + '&sortField=grandTotal&sortDir=' + reverseSortDir}`}>총액</Link></th>
                                                 <th>비고</th>
                                             </tr>
                                         </thead>
@@ -399,10 +397,8 @@ const OrderList = () => {
                                                 return (
                                                     <tr key={index}>
                                                         <td>{order.orderId}</td>
-                                                        <td>{order.orderItemId}</td>
                                                         <td>{order.customerId}</td>
                                                         <td>{order.deliveryAddress}</td>
-                                                        <td>{order.totalOrderPrice}원</td>
                                                         <td id='orderListBtn' style={{ display: 'flex', justifyContent: 'center', height: '61px' }}>
                                                             <Link to={`/BookMarket/order/view`} state={{ orderId: order.orderId, page: currentPage }}><span className="badge text-bg-secondary">상세보기</span></Link>
                                                             <Link to={`/BookMarket/order/edit`} state={{ orderId: order.orderId, page: currentPage }}><span className="badge text-bg-warning">수정</span></Link>
