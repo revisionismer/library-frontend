@@ -127,10 +127,10 @@ const OrderView = () => {
 
                                 <div className="row text-left">
                                     <div className="col-md-6 py-3">
-                                        <strong>배송 주소</strong><br/> 
+                                        <strong>배송 주소</strong><br />
 
-                                        성명 : {delivery.recipient}<br/>
-                                        주소 : {delivery.destination} <br/>
+                                        성명 : {delivery.recipient}<br />
+                                        주소 : {delivery.destination} <br />
                                         <p><em>{delivery.deliveryDate == null ? '배송 준비중' : `배송중(${delivery.deliveryDate} 발송)`}</em></p>
                                     </div>
                                 </div>
