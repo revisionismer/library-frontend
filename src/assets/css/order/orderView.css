@@ -5,3 +5,105 @@
 #orderView #orderView_area {
     height: 100%;
 }
+
+#orderView #orderView_area #deliveryInfo {
+    padding: 20px; 
+    background-color: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    font-family: Arial, sans-serif;
+    max-width: 1000px; 
+    margin: 20px auto;
+}
+
+#orderView #orderView_area #deliveryInfo p {
+    font-size: 18px;
+    font-weight: bold; 
+    color: #333;
+}
+
+#orderView #orderView_area #deliveryInfo span {
+    color: #2563EB;
+}
+
+#orderView #orderView_area #deliveryInfo #address {
+    background-color: #F9FAFB; 
+    padding: 16px; 
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    margin-top: 16px;
+}
+
+#orderView #orderView_area #deliveryInfo #address h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+#orderView #orderView_area #deliveryInfo #address p {
+    font-size: 14px;
+    color: #374151; 
+    line-height: 1.6;
+}
+
+#orderView #orderView_area #deliveryInfo #address #customerInfo {
+    margin: 2px 0;
+    width: 100%;
+}
+
+#orderView #orderView_area #orderInfo {
+    max-width: 1000px; 
+    margin: 40px auto; 
+    font-family: Arial, sans-serif;
+}
+
+#orderView #orderView_area #orderInfo h1 {
+    font-size: 26px;
+    font-weight: bold; 
+    margin-bottom: 30px;
+    color: #1F2937;
+}
+
+#orderView #orderView_area #orderInfo > div {
+    overflow-x: auto;
+}
+
+#orderView #orderView_area #orderInfo table {
+    width: 100%;
+    border-collapse: collapse; 
+    min-width: 700px;
+}
+
+#orderView #orderView_area #orderInfo table thead tr {
+    background-color: #f3f4f6; 
+    text-align: left;
+}
+
+#orderView #orderView_area #orderInfo table thead tr th {
+    padding: 12px;
+    font-size: 14px; 
+    color: #374151;
+}
+
+#orderView #orderView_area #orderInfo table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#orderView #orderView_area #orderInfo table tbody tr td {
+    padding: 12px;
+    font-size: 14px;
+    color: #111827;
+}
+
+#orderView #orderView_area #orderInfo #orderInfoBtn {
+    display: flex; 
+    justify-content: left; 
+    align-items: center;
+    width: 100%;
+}
+
+#orderView #orderView_area #orderInfo #orderInfoBtn a {
+    margin-right: 5px;
+}
+
