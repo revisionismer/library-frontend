@@ -122,19 +122,22 @@ const OrderView = () => {
                     <div id='orderView_area'>
                         <div className="row align-items-md-stretch">
                             <div className="container">
+                                <div id='deliveryInfo'>
+                                    <p>주문번호 :<span> {state.orderId} </span></p>
 
-                                <p>주문번호 : {state.orderId}</p>
-
-                                <div className="row text-left">
-                                    <div className="col-md-6 py-3">
-                                        <strong>배송 주소</strong><br />
-
-                                        성명 : {delivery.recipient}<br />
-                                        주소 : {delivery.destination} <br />
-                                        <p><em>{delivery.deliveryDate == null ? '배송 준비중' : `배송중(${delivery.deliveryDate} 발송)`}</em></p>
+                                    <div id='address' className="row text-left">
+                                        <div className="col-md-6 py-3">
+                                            <strong>배송 주소</strong><br />
+                                            <div id='customerInfo'>
+                                                성명 : {delivery.recipient}<br />
+                                                주소 : {delivery.destination} <br />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6 py-3 row text-right">
+                                            <p><em>{delivery.deliveryDate == null ? '배송 준비중' : `배송중(${delivery.deliveryDate} 발송)`}</em></p>
+                                        </div>
                                     </div>
                                 </div>
-
                                 {orderCnt === 0 ?
                                     <div className="row text-left">
                                         <div className="col-md-6 py-3">
@@ -143,7 +146,8 @@ const OrderView = () => {
                                     </div>
                                     :
 
-                                    <div className="row text-left">
+                                    <div id='orderInfo' className="row text-left">
+                                        <h1>📋 주문 내역</h1>
                                         {orderItems.map((order, index) =>
                                             <div className="row py-2" key={index}>
                                                 <input type='hidden' id='orderId' name='orderId' value={order.orderId} />
@@ -172,7 +176,7 @@ const OrderView = () => {
 
                                                             <td className="text-center" style={{ textAlign: 'center', width: '10%' }}>{order.count}</td>
                                                             <td className="text-center" style={{ width: '20%' }}>
-                                                                <span>{order.price}</span>
+                                                                <span>{order.price}원</span>
                                                             </td>
 
                                                             <td className="text-center" >{order.totalOrderItemPrice}원</td>
@@ -189,17 +193,25 @@ const OrderView = () => {
                                             <div className="text-center text-danger"><h4><strong>{totalOrderPrice}원</strong></h4></div>
 
                                         </div>
+
+                                        <br />
+                                        <div id='orderInfoBtn'>
+                                            <p>
+                                                <Link to="/BookMarket/books" className="btn btn-primary"> &laquo; 도서목록</Link>
+                                                <Link to={`/BookMarket/order/list?page=${state.page == 0 ? 1 : state.page}`} className="btn btn-warning"> &laquo; 뒤로가기</Link>
+                                            </p>
+                                        </div>
                                     </div>
                                 }
 
+
+
                             </div>
+
+
                         </div>
 
-                        <br />
-                        <p>
-                            <Link to="/BookMarket/books" className="btn btn-primary"> &laquo; 도서목록</Link>
-                            <Link to={`/BookMarket/order/list?page=${state.page == 0 ? 1 : state.page}`} className="btn btn-warning"> &laquo; 뒤로가기</Link>
-                        </p>
+
                     </div>
                 </div>
             </div>
