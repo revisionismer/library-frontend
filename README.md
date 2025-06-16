@@ -26,6 +26,7 @@
 24. orderView.js 페이지 api 연동(미완성)
 25. orderList.js 이전 페이지 정보로 뒤로가기 수정
 26. orderView.js 페이지 api 연동(완성)
-27. orderView.js 페이지 ui 및 css 수정
+27. orderView.js 페이지 ui 및 css 수정 1
 28. orderView.js 페이지에 배송 정보 데이터 추가
 29. orderList.js 페이지 api 연동(완성)
+30. orderView.js 페이지 ui 및 css 수정 2
