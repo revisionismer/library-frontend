@@ -30,3 +30,4 @@
 28. orderView.js 페이지에 배송 정보 데이터 추가
 29. orderList.js 페이지 api 연동(완성)
 30. orderView.js 페이지 ui 및 css 수정 2
+31. 전체적인 css 수정

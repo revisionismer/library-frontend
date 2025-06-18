@@ -52,11 +52,11 @@ const BookList = () => {
 
     useEffect(() => {
         const getBooks = async () => {
-            axios.get(`http://127.0.0.1:8080/api/books/s/all`,
+            axios.get(`http://127.0.0.1:8080/api/books/all`,
                 {
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
-                        'Authorization': 'Bearer ' + ACCESS_TOKEN
+                   //   'Authorization': 'Bearer ' + ACCESS_TOKEN
                     }
                 }
             ).then(function (res) {

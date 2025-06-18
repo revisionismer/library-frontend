@@ -66,7 +66,7 @@ function App() {
 
         <Route path='/BookMarket/board/list' exact={true} element={<BoardList />}></Route>
 
-        <Route path='/BookMarket/members/:id/update' exact={true} element={<UpdateMember />}></Route>
+        <Route path='/BookMarket/members/update' exact={true} element={<UpdateMember />}></Route>
       </Routes>
       <Footer />
     </div>

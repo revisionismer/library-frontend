@@ -125,7 +125,7 @@ const Header = () => {
                         ''
                     }
                     {ACCESS_TOKEN != null ?
-                        <Link to="/BookMarket/members/1/update" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
+                        <Link to="/BookMarket/members/update" className="nav-link">회원수정 &nbsp;| &nbsp;</Link>
                         :
                         <Link to="/signup" className="nav-link">회원가입 &nbsp;| &nbsp;</Link>
                     }

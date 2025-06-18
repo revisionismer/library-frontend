@@ -184,7 +184,7 @@ const AddBook = () => {
                                 <Link to="?lang=ko" style={{ textDecorationLine: 'none' }}>Korean</Link>|
                                 <Link to="?lang=en" style={{ textDecorationLine: 'none' }}>English</Link>
                                 {ACCESS_TOKEN !== null ?
-                                    <input type="button" className="btn btn-sm btn-danger" value="Logout" />
+                                    <input type="button" id='logoutBtn' className="btn btn-sm btn-danger" value="Logout" />
                                     :
                                     <input type="button" className="btn btn-sm btn-success" value="LogIn" />
                                 }
@@ -193,7 +193,7 @@ const AddBook = () => {
                             </div>
                             <legend className='text-end'></legend>
                             <div id='bookWriteForm'>
-                                <form action="/BookMarket/books/add" method="post" encType="multipart/form-data">
+                                <form className='form-container' action="/BookMarket/books/add" method="post" encType="multipart/form-data">
 
                                     <div className="mb-3 row">
                                         <label className="col-sm-2 control-label" ><span>bookName</span></label>
