@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+
+
 #orderList {
     height: 100vh;
 }
@@ -40,4 +42,34 @@
 #orderList #orderList_area #isOrders p {
     font-weight: bold;
     font-size: 15px;
+}
+
+#orderList #orderList_area #pagination {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+#orderList #orderList_area #pagination a {
+    color: #1f5fbf;
+    padding: 3px 6px;
+    text-decoration: none;
+    border: 1px solid #d1dce5;
+    border-radius: 6px;
+    transition: ease-in;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+#orderList #orderList_area #pagination a:hover {
+    background-color: #f0f6ff;
+}
+
+#orderList #orderList_area #pagination a.active {
+    background-color: #1f5fbf;
+    color: white;
+    border-color: #1f5fbf;
+    font-weight: 600;
 }
