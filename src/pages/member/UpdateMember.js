@@ -139,7 +139,7 @@ const UpdateMember = () => {
                                 </div>
                                 <div className="mb-3 row">
                                     <label className="col-sm-2 control-label">자기소개</label>
-                                    <div className="col-sm-3">
+                                    <div className="col-sm-8">
                                         <textarea type="text" name="bio" className="form-control" defaultValue={user.bio} />
                                     </div>
                                     <div className="col-sm-6">

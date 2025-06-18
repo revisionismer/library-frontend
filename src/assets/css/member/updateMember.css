@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #updatemember {
-    height: 100vh;
+    height: 120vh;
 }
 
 #updatemember a {
@@ -13,8 +13,8 @@
 }
 
 #updatemember_area {
-    border : 1px solid #ddd;
-    padding: 10px 20px; 
+    border: 1px solid #ddd;
+    padding: 10px 20px;
 
 }
 
@@ -26,4 +26,112 @@
 
 #updatemember_area #updatememberBtn input {
     margin-right: 2px;
+}
+
+#updatemember #updatemember_area form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+#updatemember #updatemember_area legend {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 8px;
+}
+
+#updatemember #updatemember_area .row {
+    display: flex;
+    align-items: center;
+}
+
+#updatemember #updatemember_area label {
+    width: 120px;
+    font-weight: 600;
+    color: #444;
+}
+
+#updatemember #updatemember_area input[type="text"],
+#updatemember #updatemember_area input[type="password"],
+
+#updatemember #updatemember_area textarea {
+    flex-grow: 1;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#updatemember #updatemember_area input[readonly] {
+    background-color: #e9ecef;
+    color: #555;
+}
+
+#updatemember #updatemember_area input[type="text"]:focus,
+
+#updatemember #updatemember_area input[type="password"]:focus,
+
+#updatemember #updatemember_area textarea:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
+#updatemember #updatemember_area textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+#updatemember #updatemember_area .text-danger {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-left: 130px;
+    height: 18px;
+}
+
+#updatemember #updatemember_area #updatememberBtn {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#updatemember #updatemember_area #updatememberBtn input[type="button"] {
+    padding: 10px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+    color: white;
+    min-width: 100px;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-success {
+    background-color: #4caf50;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-success:hover {
+    background-color: #43a047;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-danger {
+    background-color: #e53935;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-secondary {
+    background-color: #757575;
+}
+
+#updatemember #updatemember_area #updatememberBtn input.btn-secondary:hover {
+    background-color: #616161;
 }
